@@ -144,18 +144,19 @@ function createGame(Listener) {
                     if (state.map[y][x] == 0 || state.map[y][x] == 2) dots += 1
                 }
             }
+            dots += state.ghosts.filter(g => g.oldMap == 0).length
 
             if (dots <= 0 && state.gameStage != 'levelWon') {
                 state.song.pause()
                 state.pauseMovement = true
                 state.gameStage = 'levelWon'
-                setTimeout(() => resetGame(true), 4000)
+                setTimeout(() => resetGame(true), 4000)                
             }
             
             if (!state.pauseMovement) {
                 if (state.pacMan.pacManSpeedCounter <= +new Date()) {
                     state.pacMan.pacManSpeedCounter = +new Date()+state.pacMan.pacManSpeed
-                    movePacMan( 
+                    movePacMan(
                         {
                             Listener: command.Listener,
                             direction: command.Listener.state.direction,

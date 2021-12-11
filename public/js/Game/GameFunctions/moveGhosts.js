@@ -48,8 +48,11 @@ module.exports = (state, checkPacManDeath) => {
             if (state.map[y].includes(ghostId)) {
                 for (let i = 21; i <= state.map[y].length; i++) delete state.map[y][i]
                 state.map[y] = state.map[y].filter(i => Number(i) >= 0 && Number(i) <= 20)
-                lineY = Number(y)
-                lineX = state.map[y].indexOf(ghostId)
+                if (lineX != null || lineY != null) state.map[Number(y)][state.map[Number(y)].indexOf(ghostId)] = 3
+                else {
+                    lineY = Number(y)
+                    lineX = state.map[y].indexOf(ghostId)
+                }
             }
         }
 

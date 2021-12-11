@@ -10,7 +10,7 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
     if (type == 2) {
         addPoints(150)
         state.pacManKills = +new Date()+4700
-        state.ghostsSettings.ghostsSpeed = 350
+        state.ghostsSettings.ghostsSpeed = 400
         for (let i in state.ghosts) state.ghosts[i].scared = true
 
         state.song.pause()
