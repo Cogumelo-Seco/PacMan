@@ -60,25 +60,25 @@ module.exports = async (canvas, game, Listener) => {
                     case 'up':
                         if (ghost.dalay > 0) {
                             ghostY += ghost.dalay
-                            ghost.dalay -= tileSize/game.state.ghostsSettings.ghostsSpeed*tileSize/2
+                            ghost.dalay -= tileSize/game.state.ghostsSettings.ghostsSpeed*(tileSize/2-2)
                         }
                         break
                     case 'down':
                         if (ghost.dalay > 0) {
                             ghostY -= ghost.dalay
-                            ghost.dalay -= tileSize/game.state.ghostsSettings.ghostsSpeed*tileSize/2
+                            ghost.dalay -= tileSize/game.state.ghostsSettings.ghostsSpeed*(tileSize/2-2)
                         }
                         break
                     case 'left':
                         if (ghost.dalay > 0) {
                             ghostX += ghost.dalay
-                            ghost.dalay -= tileSize/game.state.ghostsSettings.ghostsSpeed*tileSize/2
+                            ghost.dalay -= tileSize/game.state.ghostsSettings.ghostsSpeed*(tileSize/2-2)
                         }
                         break
                     case 'right':
                         if (ghost.dalay > 0) {
                             ghostX -= ghost.dalay
-                            ghost.dalay -= tileSize/game.state.ghostsSettings.ghostsSpeed*tileSize/2
+                            ghost.dalay -= tileSize/game.state.ghostsSettings.ghostsSpeed*(tileSize/2-2)
                         }
                         break
                 }
@@ -106,7 +106,7 @@ module.exports = async (canvas, game, Listener) => {
                         if (game.state.pacMan.dalay > 0) {
                             pacManY += game.state.pacMan.dalay
                             pacManTraceY = pacManY+15
-                            game.state.pacMan.dalay -= tileSize/game.state.pacMan.pacManSpeed*tileSize/2
+                            game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
                         }
                         break
                     case 'down':
@@ -114,7 +114,7 @@ module.exports = async (canvas, game, Listener) => {
                         if (game.state.pacMan.dalay > 0) {
                             pacManY -= game.state.pacMan.dalay
                             pacManTraceY = pacManY-20
-                            game.state.pacMan.dalay -= tileSize/game.state.pacMan.pacManSpeed*tileSize/2
+                            game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
                         }
                         break
                     case 'left':
@@ -122,7 +122,7 @@ module.exports = async (canvas, game, Listener) => {
                         if (game.state.pacMan.dalay > 0) {
                             pacManX += game.state.pacMan.dalay
                             pacManTraceX = pacManX+15
-                            game.state.pacMan.dalay -= tileSize/game.state.pacMan.pacManSpeed*tileSize/2
+                            game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
                         }
                         break
                     case 'right':
@@ -130,7 +130,7 @@ module.exports = async (canvas, game, Listener) => {
                         if (game.state.pacMan.dalay > 0) {
                             pacManX -= game.state.pacMan.dalay
                             pacManTraceX = pacManX-15
-                            game.state.pacMan.dalay -= tileSize/game.state.pacMan.pacManSpeed*tileSize/2
+                            game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
                         }
                         break
                 }

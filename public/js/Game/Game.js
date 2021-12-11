@@ -33,13 +33,13 @@ function createGame(Listener) {
             }
         },
         pacMan: {
-            pacManSpeed: 250,
+            pacManSpeed: 200,
             pacManSpeedCounter: 0,
             withoutPacMan: 0,
             dalay: 0
         },
         ghostsSettings: {
-            ghostsSpeed: 250,
+            ghostsSpeed: 200,
             ghostsSpeedCounter: 0,
         },
         ghosts: [

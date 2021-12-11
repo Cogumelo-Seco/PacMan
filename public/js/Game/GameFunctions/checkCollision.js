@@ -23,7 +23,7 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
             if (state.pacManKills <= +new Date) {
                 clearInterval(interval)                
                 state.pacManKills = 0
-                state.ghostsSettings.ghostsSpeed = 250
+                state.ghostsSettings.ghostsSpeed = 200
                 state.morePoints.oldPoints = 100
                 for (let i in state.ghosts) state.ghosts[i].scared = false
 
