@@ -21,25 +21,25 @@ export default function createListener() {
     function handleKeys(event) {
         let keyPressed = event.key ? event.key.toLowerCase() : null
 
-        if (keyPressed == 'w' || keyPressed == 'ArrowUp') {
+        if (keyPressed == 'w' || keyPressed == 'arrowup') {
                 if (state.direction != 'up') {
                     if (state.direction != 'down') state.oldDirection = state.direction
                     state.direction = 'up'
                 }
         }
-        if (keyPressed == 'a' || keyPressed == 'ArrowLeft') {
+        if (keyPressed == 'a' || keyPressed == 'arrowleft') {
             if (state.direction != 'left') {
                 if (state.direction != 'right') state.oldDirection = state.direction
                 state.direction = 'left'
             }
         }
-        if (keyPressed == 's' || keyPressed == 'ArrowDown') {
+        if (keyPressed == 's' || keyPressed == 'arrowdown') {
             if (state.direction != 'down') {
                 if (state.direction != 'up') state.oldDirection = state.direction
                 state.direction = 'down'
             }
         }
-        if (keyPressed == 'd' || keyPressed == 'ArrowRight') {
+        if (keyPressed == 'd' || keyPressed == 'arrowright') {
             if (state.direction != 'right') {
                 if (state.direction != 'left') state.oldDirection = state.direction
                 state.direction = 'right'

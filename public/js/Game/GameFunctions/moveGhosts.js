@@ -31,19 +31,9 @@ module.exports = (state, checkPacManDeath) => {
             state.map[10][11] = ghostId
             return true
         }
-        if (state.map[9][9] == 3) {
-            state.ghosts[i].locked = 0
-            state.map[9][9] = ghostId
-            return true
-        }
         if (state.map[9][10] == 3) {
             state.ghosts[i].locked = 0
             state.map[9][10] = ghostId
-            return true
-        }
-        if (state.map[9][1] == 3) {
-            state.ghosts[i].locked = 0
-            state.map[9][11] = ghostId
             return true
         }
     }
