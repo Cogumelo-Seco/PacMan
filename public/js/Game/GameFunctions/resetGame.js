@@ -85,6 +85,7 @@ module.exports = (state, Listener, resetAll) => {
             [ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 ],
         ]
 
+        state.lifes = 2
         state.score = 0
     }
 
