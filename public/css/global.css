@@ -1,0 +1,11 @@
+/* Circulo de Carregando */
+
+div#loadingCircle {
+    width: 20px;
+    height: 20px;
+    margin: 20px auto;
+    border: solid #ff6363 10px;
+    border-top: solid transparent 10px;
+    border-radius: 20px;
+    animation: loadingCircle 1s linear infinite;
+}

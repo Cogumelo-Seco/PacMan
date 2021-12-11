@@ -1,0 +1,13 @@
+@media screen and (max-width:597px) {
+    section h1#gameName {
+        font-size: 80px;
+    }
+
+    section ul {    
+        font-size: 20px;
+        width: 300px;
+    }
+    section ul li:hover {
+        font-size: 21px;
+    }
+}
