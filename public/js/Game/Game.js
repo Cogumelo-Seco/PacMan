@@ -1,6 +1,6 @@
 function createGame(Listener) {
     const state = {
-        lifes: 4,
+        lifes: 2,
         highScore: 0,
         score: 0,
         gameStage: 'initial',
@@ -39,13 +39,17 @@ function createGame(Listener) {
             dalay: 0
         },
         ghostsSettings: {
-            ghostsSpeed: 270,
+            ghostsSpeed: 250,
             ghostsSpeedCounter: 0,
         },
         ghosts: [
             {
                 color: 'red',
                 animDirection: 'up',
+                placeOfDeath: {
+                    x: 0,
+                    y: 0
+                },
                 death: false,
                 locked: 0,
                 oldMap: 3,
@@ -55,6 +59,10 @@ function createGame(Listener) {
             {
                 color: 'pink',
                 animDirection: 'up',
+                placeOfDeath: {
+                    x: 0,
+                    y: 0
+                },
                 death: false,
                 locked: 0,
                 oldMap: 3,
@@ -64,6 +72,10 @@ function createGame(Listener) {
             {
                 color: 'yellow',
                 animDirection: 'up',
+                placeOfDeath: {
+                    x: 0,
+                    y: 0
+                },
                 death: false,
                 locked: 0,
                 oldMap: 3,
@@ -73,6 +85,10 @@ function createGame(Listener) {
             {
                 color: 'cyan',
                 animDirection: 'up',
+                placeOfDeath: {
+                    x: 0,
+                    y: 0
+                },
                 death: false,
                 locked: 0,
                 oldMap: 3,

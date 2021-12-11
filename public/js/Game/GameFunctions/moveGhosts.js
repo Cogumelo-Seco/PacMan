@@ -16,17 +16,17 @@ module.exports = (state, checkPacManDeath) => {
         if (state.ghosts[i].death) return;
         state.ghosts[i].oldMap = 3
 
-        if (state.map[10][9] == 3) {
-            state.ghosts[i].locked = 0
-            state.map[10][9] = ghostId
-            return true
-        }
         if (state.map[10][10] == 3) {
             state.ghosts[i].locked = 0
             state.map[10][10] = ghostId
             return true
         }
-            if (state.map[10][11] == 3) {
+        if (state.map[10][9] == 3) {
+            state.ghosts[i].locked = 0
+            state.map[10][9] = ghostId
+            return true
+        }
+        if (state.map[10][11] == 3) {
             state.ghosts[i].locked = 0
             state.map[10][11] = ghostId
             return true
@@ -38,7 +38,7 @@ module.exports = (state, checkPacManDeath) => {
         }
     }
 
-    for (let i in state.ghosts) {    
+    for (let i in state.ghosts) {
         state.ghosts[i].animation = state.ghosts[i].animation ? false : true        
         let ghostId = state.ghosts[i].id
         let lineX = null
@@ -82,8 +82,8 @@ module.exports = (state, checkPacManDeath) => {
             if (!direction) {
                 state.ghosts[i].locked += 1
                 if (state.ghosts[i].locked >= 10) {
-                    let regenerateGhost = regenerateGhost(i, ghostId)
-                    if (regenerateGhost) state.map[lineY][lineX] = state.ghosts[i].oldMap
+                    let regenerateGhostVerify = regenerateGhost(i, ghostId)
+                    if (regenerateGhostVerify) state.map[lineY][lineX] = state.ghosts[i].oldMap
                 }
             } else {
                 if (direction == 'left' && lineX <= 0) {

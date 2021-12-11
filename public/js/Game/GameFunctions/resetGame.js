@@ -41,46 +41,15 @@ module.exports = (state, Listener, resetAll) => {
     state.map[9][10] = 5
     state.map[10][9] = 8
     state.map[10][10] = 7
-    state.map[10][11] = 6    
+    state.map[10][11] = 6
 
-    state.ghosts = [
-        {
-            color: 'red',
-            animDirection: 'up',
-            death: false,
-            locked: 0,
-            oldMap: 3,
-            dalay: 0,
-            id: 5
-        },
-        {
-            color: 'pink',
-            animDirection: 'up',
-            death: false,
-            locked: 0,
-            oldMap: 3,
-            dalay: 0,
-            id: 6
-        },
-        {
-            color: 'yellow',
-            animDirection: 'up',
-            death: false,
-            locked: 0,
-            oldMap: 3,
-            dalay: 0,
-            id: 7
-        },
-        {
-            color: 'cyan',
-            animDirection: 'up',
-            death: false,
-            locked: 0,
-            oldMap: 3,
-            dalay: 0,
-            id: 8
-        }
-    ]
+    for (let i in state.ghosts) {
+        let ghost = state.ghosts[i]
+        ghost.death = false
+        ghost.locked = 0
+        ghost.oldMap = 3
+        ghost.dalay = 0
+    }
 
     state.morePoints = {
         oldPoints: 100,
