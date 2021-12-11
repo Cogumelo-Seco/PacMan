@@ -79,6 +79,14 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
         state.gameStage = 'pacManDeath'
         
         if (state.lifes > 0) setTimeout(resetGame, 2000)
-        else state.gameStage = 'gameOver'
+        else {
+            state.gameStage = 'gameOver'
+            setTimeout(() => {
+                state.song.pause()
+                state.pauseMovement = true
+                state.gameStage = 'game'
+                resetGame(true)
+            }, 5000)
+        }
     }
 }

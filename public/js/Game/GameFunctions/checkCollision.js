@@ -21,6 +21,7 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
                 clearInterval(interval)
                 state.pacManKills = 0
                 state.pacMan.pacManSpeed = 250
+                state.morePoints.oldPoints = 100
                 state.song.pause()
                 state.song = new Audio('/songs/music2.mp3');
                 state.song.volume = 0.3
