@@ -3,7 +3,9 @@ module.exports = function renderGame(canvas, game, Listener) {
     canvas.height = game.state.canvas.height
 
     const ctx = canvas.getContext('2d')
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    ctx.fillStyle = 'black'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     /*let backgroundImage = new Image();
     backgroundImage.src = '/images/background.png';

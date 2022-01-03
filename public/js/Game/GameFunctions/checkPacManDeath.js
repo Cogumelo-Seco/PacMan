@@ -2,7 +2,7 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
     let ghost = state.ghosts.find(g => g.id == ghostId)
     state.pauseMovement = true
 
-    if (state.pacManKills) {
+    if (ghost.scared) {
     //if (true) {
         state.morePoints.points = state.morePoints.oldPoints < 10000 ? Math.floor(state.morePoints.oldPoints*2) : state.morePoints.oldPoints
         state.morePoints.oldPoints = state.morePoints.points
@@ -47,7 +47,7 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
         }, 100)
 
         setTimeout(() => state.pauseMovement = false, 1000)
-        state.pacManKills += 800
+        state.pacManKills += 1000
 
         state.song.pause()
         state.song = new Audio('/songs/deathGhost.mp3');
@@ -56,6 +56,7 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
         state.song.play()        
 
         if (ghost) {
+            ghost.speed = ghost.defaultSpeed
             ghost.death = true
             ghost.placeOfDeath = {
                 x: lineX*state.canvas.tileSize,
@@ -72,11 +73,13 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
 
         if (state.playeMusic2Timeout) clearTimeout(state.playeMusic2Timeout)
         state.playeMusic2Timeout = setTimeout(() => {
-            state.song.pause()
-            state.song = new Audio('/songs/music2.mp3');
-            state.song.volume = 0.3
-            state.song.loop = true
-            state.song.play()
+            if (state.gameStage == 'game') {
+                state.song.pause()
+                state.song = new Audio('/songs/music2.mp3');
+                state.song.volume = 0.3
+                state.song.loop = true
+                state.song.play()
+            }
         }, 5000)
     } else {
         state.song.pause()
@@ -89,8 +92,12 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
         state.lifes -= 1
         state.gameStage = 'pacManDeath'
         
-        if (state.lifes > 0) setTimeout(resetGame, 2000)
-        else {
+        if (state.lifes > -1) {
+            setTimeout(() => {
+                state.highScore = 0
+                resetGame()
+            }, 2000)
+        } else {
             state.gameStage = 'gameOver'
             setTimeout(() => {
                 state.song.pause()

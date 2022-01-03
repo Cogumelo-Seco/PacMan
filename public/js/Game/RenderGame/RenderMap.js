@@ -17,7 +17,6 @@ module.exports = async (canvas, game, Listener) => {
                 ctx.beginPath();
                 ctx.arc(x+(tileSize/2), y+(tileSize/2), 5, 0, 2 * Math.PI)
                 ctx.fill();
-                ctx.stroke();
             }
             if (column == 1) {
                 let wallLineSize = 6
@@ -35,24 +34,33 @@ module.exports = async (canvas, game, Listener) => {
             }
             if (column == 2) {
                 if (game.state.animations.specialDots.dalay <= +new Date()) {
-                    ctx.fillStyle = 'black'
+                    ctx.fillStyle = 'transparent'
                     if (game.state.animations.specialDots.dalay+game.state.animations.specialDots.totalDalay <= +new Date()) game.state.animations.specialDots.dalay = +new Date()+game.state.animations.specialDots.totalDalay
                 } else ctx.fillStyle = '#ffb897'
 
                 ctx.beginPath();
                 ctx.arc(x+(tileSize/2), y+(tileSize/2), 15, 0, 2 * Math.PI)
                 ctx.fill();
-                ctx.stroke();
             }
             if (column == 3) {
                 ctx.fillStyle = 'transparent'
                 ctx.fillRect(x, y, tileSize, tileSize)
             }
-            if (column >= 5 && column <= 8) {
-                let ghost = game.state.ghosts.find(g => g.id == column)
-                let ghostImage = new Image();
-                if (!ghost.scared) ghostImage.src = `/images/ghosts/${ghost.color}/ghost-${ghost.animDirection}-${ghost.animation ? 1 : 2}.png`;
-                else ghostImage.src = `/images/ghosts/scared-ghost-${game.state.pacManKills-1500 <= +new Date() ? ghost.animation ? 1 : 2 : 1}.png`;
+            if (column >= 5 && column <= 8 || column == 13) {
+                let ghost = game.state.ghosts.find(g => g.id == column)                
+                let ghostImage = ghost.images[ghost.color+ghost.animDirection+(ghost.animation ? 1 : 2)]//new Image();
+
+                if (!ghostImage) {
+                    ghostImage = new Image();
+                    ghostImage.src = `/images/ghosts/${ghost.color}/ghost-${ghost.animDirection}-${ghost.animation ? 1 : 2}.png`;
+                    ghost.images[ghost.color+ghost.animDirection+(ghost.animation ? 1 : 2)] = ghostImage
+                }
+
+                if (ghost.scared) {
+                    ghostImage = new Image();
+                    ghostImage.src = `/images/ghosts/${ghost.color}/scared/scared-ghost-${game.state.pacManKills-1500 <= +new Date() ? ghost.animation ? 1 : 2 : 1}.png`;
+                }
+
                 let ghostY = y
                 let ghostX = x
 
@@ -60,25 +68,25 @@ module.exports = async (canvas, game, Listener) => {
                     case 'up':
                         if (ghost.dalay > 0) {
                             ghostY += ghost.dalay
-                            ghost.dalay -= tileSize/game.state.ghostsSettings.ghostsSpeed*(tileSize/2-2)
+                            ghost.dalay -= tileSize/ghost.speed*(tileSize/2-2)
                         }
                         break
                     case 'down':
                         if (ghost.dalay > 0) {
                             ghostY -= ghost.dalay
-                            ghost.dalay -= tileSize/game.state.ghostsSettings.ghostsSpeed*(tileSize/2-2)
+                            ghost.dalay -= tileSize/ghost.speed*(tileSize/2-2)
                         }
                         break
                     case 'left':
                         if (ghost.dalay > 0) {
                             ghostX += ghost.dalay
-                            ghost.dalay -= tileSize/game.state.ghostsSettings.ghostsSpeed*(tileSize/2-2)
+                            ghost.dalay -= tileSize/ghost.speed*(tileSize/2-2)
                         }
                         break
                     case 'right':
                         if (ghost.dalay > 0) {
                             ghostX -= ghost.dalay
-                            ghost.dalay -= tileSize/game.state.ghostsSettings.ghostsSpeed*(tileSize/2-2)
+                            ghost.dalay -= tileSize/ghost.speed*(tileSize/2-2)
                         }
                         break
                 }
@@ -95,8 +103,6 @@ module.exports = async (canvas, game, Listener) => {
                 }
                 pacManImage.src = `/images/pac-man-${pacManImageStage}.png`;
                 let rotate = 0
-                let pacManTraceX = x
-                let pacManTraceY = y
                 let pacManX = x
                 let pacManY = y
 
@@ -105,7 +111,6 @@ module.exports = async (canvas, game, Listener) => {
                         rotate = -90
                         if (game.state.pacMan.dalay > 0) {
                             pacManY += game.state.pacMan.dalay
-                            pacManTraceY = pacManY+15
                             game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
                         }
                         break
@@ -113,7 +118,6 @@ module.exports = async (canvas, game, Listener) => {
                         rotate = 90
                         if (game.state.pacMan.dalay > 0) {
                             pacManY -= game.state.pacMan.dalay
-                            pacManTraceY = pacManY-20
                             game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
                         }
                         break
@@ -121,7 +125,6 @@ module.exports = async (canvas, game, Listener) => {
                         rotate = 180
                         if (game.state.pacMan.dalay > 0) {
                             pacManX += game.state.pacMan.dalay
-                            pacManTraceX = pacManX+15
                             game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
                         }
                         break
@@ -129,20 +132,12 @@ module.exports = async (canvas, game, Listener) => {
                         rotate = 0
                         if (game.state.pacMan.dalay > 0) {
                             pacManX -= game.state.pacMan.dalay
-                            pacManTraceX = pacManX-15
                             game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
                         }
                         break
                 }
 
                 ctx.save()
-
-                ctx.globalAlpha = 0.25
-                ctx.setTransform(1, 0, 0, 1, pacManTraceX+(tileSize/2), pacManTraceY+(tileSize/2));
-                ctx.rotate(rotate*Math.PI/180);
-                if (game.state.pacManKills) ctx.drawImage(pacManImage, -tileSize/2, -tileSize/2, tileSize, tileSize);
-
-                ctx.globalAlpha = 1
 
                 ctx.setTransform(1, 0, 0, 1, pacManX+(tileSize/2), pacManY+(tileSize/2));
                 ctx.rotate(rotate*Math.PI/180);

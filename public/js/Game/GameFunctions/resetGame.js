@@ -45,6 +45,7 @@ module.exports = (state, Listener, resetAll) => {
 
     for (let i in state.ghosts) {
         let ghost = state.ghosts[i]
+        ghost.animDirection = 'up'
         ghost.death = false
         ghost.locked = 0
         ghost.oldMap = 3

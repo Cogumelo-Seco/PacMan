@@ -33,14 +33,10 @@ function createGame(Listener) {
             }
         },
         pacMan: {
-            pacManSpeed: 200,
+            pacManSpeed: 190,
             pacManSpeedCounter: 0,
             withoutPacMan: 0,
             dalay: 0
-        },
-        ghostsSettings: {
-            ghostsSpeed: 200,
-            ghostsSpeedCounter: 0,
         },
         ghosts: [
             {
@@ -50,6 +46,10 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
+                images: {},
+                defaultSpeed: 180,
+                speed: 180,
+                speedCounter: 0,
                 death: false,
                 locked: 0,
                 oldMap: 3,
@@ -63,6 +63,10 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
+                images: {},
+                defaultSpeed: 190,
+                speed: 190,
+                speedCounter: 0,
                 death: false,
                 locked: 0,
                 oldMap: 3,
@@ -76,6 +80,10 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
+                images: {},
+                defaultSpeed: 190,
+                speed: 190,
+                speedCounter: 0,
                 death: false,
                 locked: 0,
                 oldMap: 3,
@@ -89,6 +97,10 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
+                images: {},
+                defaultSpeed: 190,
+                speed: 190,
+                speedCounter: 0,
                 death: false,
                 locked: 0,
                 oldMap: 3,
@@ -127,6 +139,7 @@ function createGame(Listener) {
     const movePacMan = (command) => require('./GameFunctions/movePacMan')(state, checkCollision, command)
     const moveGhosts = () => require('./GameFunctions/moveGhosts')(state, checkPacManDeath)
     const checkCollision = (command) => require('./GameFunctions/checkCollision')(state, checkPacManDeath, addPoints, command)
+    const codes = require('./GameFunctions/codes')(state)
 
     function start(command) {
         state.gameStage = 'game'
@@ -164,10 +177,13 @@ function createGame(Listener) {
                         }
                     )
                 }
+                moveGhosts()
+            }
 
-                if (state.ghostsSettings.ghostsSpeedCounter <= +new Date()) {
-                    state.ghostsSettings.ghostsSpeedCounter = +new Date()+state.ghostsSettings.ghostsSpeed
-                    moveGhosts()
+            for (let i in codes) {
+                if (Listener.state.codeText.toLowerCase().includes(i)) {
+                    Listener.state.codeText = ''
+                    codes[i]()
                 }
             }
         }, 1)

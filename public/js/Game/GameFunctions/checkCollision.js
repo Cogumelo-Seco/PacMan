@@ -10,8 +10,10 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
     if (type == 2) {
         addPoints(150)
         state.pacManKills = +new Date()+4700
-        state.ghostsSettings.ghostsSpeed = 400
-        for (let i in state.ghosts) state.ghosts[i].scared = true
+        for (let i in state.ghosts) {
+            state.ghosts[i].scared = true
+            state.ghosts[i].speed = 400
+        }
 
         state.song.pause()
         state.song = new Audio('/songs/musicSpecial.mp3');
@@ -23,9 +25,11 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
             if (state.pacManKills <= +new Date) {
                 clearInterval(interval)                
                 state.pacManKills = 0
-                state.ghostsSettings.ghostsSpeed = 200
                 state.morePoints.oldPoints = 100
-                for (let i in state.ghosts) state.ghosts[i].scared = false
+                for (let i in state.ghosts) {
+                    state.ghosts[i].scared = false
+                    state.ghosts[i].speed = state.ghosts[i].defaultSpeed
+                }
 
                 state.song.pause()
                 state.song = new Audio('/songs/music2.mp3');

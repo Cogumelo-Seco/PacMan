@@ -3,7 +3,8 @@ export default function createListener() {
         observers: [],
         direction: 'left',
         oldDirection: 'up',
-        mobile: false
+        mobile: false,
+        codeText: ''
     }
 
     const subscribe = (observerFunction) => state.observers.push(observerFunction)
@@ -20,6 +21,8 @@ export default function createListener() {
 
     function handleKeys(event) {
         let keyPressed = event.key ? event.key.toLowerCase() : null
+
+        state.codeText += keyPressed
 
         if (keyPressed == 'w' || keyPressed == 'arrowup') {
                 if (state.direction != 'up') {
