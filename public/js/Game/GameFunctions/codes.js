@@ -10,6 +10,7 @@ module.exports = (state) => {
                     y: 0
                 },
                 images: {},
+                withoutGhost: 0,
                 defaultSpeed: 170,
                 speed: 170,
                 speedCounter: 0,

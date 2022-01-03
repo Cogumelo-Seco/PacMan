@@ -48,6 +48,7 @@ function createGame(Listener) {
                     y: 0
                 },
                 images: {},
+                withoutGhost: 0,
                 defaultSpeed: 180,
                 speed: 180,
                 speedCounter: 0,
@@ -66,6 +67,7 @@ function createGame(Listener) {
                     y: 0
                 },
                 images: {},
+                withoutGhost: 0,
                 defaultSpeed: 190,
                 speed: 190,
                 speedCounter: 0,
@@ -84,6 +86,7 @@ function createGame(Listener) {
                     y: 0
                 },
                 images: {},
+                withoutGhost: 0,
                 defaultSpeed: 190,
                 speed: 190,
                 speedCounter: 0,
@@ -102,6 +105,7 @@ function createGame(Listener) {
                     y: 0
                 },
                 images: {},
+                withoutGhost: 0,
                 defaultSpeed: 190,
                 speed: 190,
                 speedCounter: 0,
@@ -191,7 +195,7 @@ function createGame(Listener) {
                     let code = codes[i]()
                     if (code) {
                         codeMessage.style.display = 'block'
-                        setTimeout(() => codeMessage.style.display = 'none', 5000)
+                        setTimeout(() => codeMessage.style.display = 'none', 3000)
                     }
                 }
             }

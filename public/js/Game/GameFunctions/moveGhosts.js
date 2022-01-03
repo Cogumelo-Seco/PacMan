@@ -114,7 +114,13 @@ module.exports = (state, checkPacManDeath) => {
                             break
                     }
                 }
-            } else regenerateGhost(i, ghostId)
+            } else {
+                state.ghosts[i].withoutGhost += 1
+                if (state.ghosts[i].withoutGhost >= 5) {
+                    state.ghosts[i].withoutGhost = 0
+                    regenerateGhost(i, ghostId)
+                }                
+            }
         }
     }
 }
