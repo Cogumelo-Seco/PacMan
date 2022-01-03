@@ -4,13 +4,14 @@ module.exports = (state) => {
             if (!state.ghosts.find(g => g.color == 'frog')) state.ghosts.push({
                 color: 'frog',
                 animDirection: 'up',
+                activeAnimation: false,
                 placeOfDeath: {
                     x: 0,
                     y: 0
                 },
                 images: {},
-                defaultSpeed: 110,
-                speed: 110,
+                defaultSpeed: 170,
+                speed: 170,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
@@ -18,6 +19,8 @@ module.exports = (state) => {
                 dalay: 0,
                 id: 13
             })
+            else return false 
+            return true
         }
     }
 }

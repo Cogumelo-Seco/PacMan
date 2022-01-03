@@ -48,11 +48,11 @@ module.exports = async (canvas, game, Listener) => {
             }
             if (column >= 5 && column <= 8 || column == 13) {
                 let ghost = game.state.ghosts.find(g => g.id == column)                
-                let ghostImage = ghost.images[ghost.color+ghost.animDirection+(ghost.animation ? 1 : 2)]//new Image();
+                let ghostImage = ghost.images[ghost.color+ghost.animDirection+(ghost.animation ? 2 : 1)]//new Image();
 
                 if (!ghostImage) {
                     ghostImage = new Image();
-                    ghostImage.src = `/images/ghosts/${ghost.color}/ghost-${ghost.animDirection}-${ghost.animation ? 1 : 2}.png`;
+                    ghostImage.src = `/images/ghosts/${ghost.color}/ghost-${ghost.animDirection}-${ghost.animation ? 2 : 1}.png`;
                     ghost.images[ghost.color+ghost.animDirection+(ghost.animation ? 1 : 2)] = ghostImage
                 }
 

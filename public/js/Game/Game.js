@@ -42,6 +42,7 @@ function createGame(Listener) {
             {
                 color: 'red',
                 animDirection: 'up',
+                activeAnimation: true,
                 placeOfDeath: {
                     x: 0,
                     y: 0
@@ -59,6 +60,7 @@ function createGame(Listener) {
             {
                 color: 'pink',
                 animDirection: 'up',
+                activeAnimation: true,
                 placeOfDeath: {
                     x: 0,
                     y: 0
@@ -76,6 +78,7 @@ function createGame(Listener) {
             {
                 color: 'yellow',
                 animDirection: 'up',
+                activeAnimation: true,
                 placeOfDeath: {
                     x: 0,
                     y: 0
@@ -93,6 +96,7 @@ function createGame(Listener) {
             {
                 color: 'cyan',
                 animDirection: 'up',
+                activeAnimation: true,
                 placeOfDeath: {
                     x: 0,
                     y: 0
@@ -182,8 +186,13 @@ function createGame(Listener) {
 
             for (let i in codes) {
                 if (Listener.state.codeText.toLowerCase().includes(i)) {
+                    let codeMessage = document.getElementById('codeMessage')                    
                     Listener.state.codeText = ''
-                    codes[i]()
+                    let code = codes[i]()
+                    if (code) {
+                        codeMessage.style.display = 'block'
+                        setTimeout(() => codeMessage.style.display = 'none', 5000)
+                    }
                 }
             }
         }, 1)

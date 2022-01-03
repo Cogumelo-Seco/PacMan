@@ -1,0 +1,8 @@
+@keyframes codeMessage {
+    from {
+        top: -50px;
+    }
+    to {
+        top: 10px;
+    }
+}

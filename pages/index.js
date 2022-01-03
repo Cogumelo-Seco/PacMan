@@ -41,6 +41,8 @@ const Game = (props) => {
             <body>
 
                 <section>
+                    <div id="codeMessage">Código ativado</div>
+                    
                     <div id="game">
                         <ul id="gameHUD">
                             <li id="score">0</li>

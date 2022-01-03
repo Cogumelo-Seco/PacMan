@@ -46,7 +46,7 @@ module.exports = (state, checkPacManDeath) => {
         if (state.ghosts[i].speedCounter <= +new Date()) {
             state.ghosts[i].speedCounter = +new Date()+state.ghosts[i].speed
 
-            state.ghosts[i].animation = state.ghosts[i].animation ? false : true        
+            if (state.ghosts[i].activeAnimation) state.ghosts[i].animation = state.ghosts[i].animation ? false : true        
 
             for (let y in state.map) {
                 if (state.map[y].includes(ghostId)) {

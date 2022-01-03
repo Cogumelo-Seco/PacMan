@@ -4,7 +4,7 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
 
     if (ghost.scared) {
     //if (true) {
-        state.morePoints.points = state.morePoints.oldPoints < 10000 ? Math.floor(state.morePoints.oldPoints*2) : state.morePoints.oldPoints
+        state.morePoints.points = Math.floor(state.morePoints.oldPoints*2)
         state.morePoints.oldPoints = state.morePoints.points
         addPoints(state.morePoints.points)
 

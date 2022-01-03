@@ -1,5 +1,5 @@
 module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) => {
-    if (type == 5 || type == 6 || type == 7 || type == 8) {
+    if (type == 5 || type == 6 || type == 7 || type == 8 || type == 13) {
         checkPacManDeath([ type, lineY, lineX ])
     }
     if (type == 0) {
@@ -19,7 +19,7 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
         state.song = new Audio('/songs/musicSpecial.mp3');
         state.song.volume = 1
         state.song.loop = false
-        state.song.play()        
+        state.song.play()
 
         let interval = setInterval(() => {
             if (state.pacManKills <= +new Date) {
