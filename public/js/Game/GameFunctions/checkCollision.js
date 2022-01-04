@@ -1,7 +1,7 @@
 module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) => {
-    if (type >= 5 && type <= 8 || type >= 10 && type <= 20) {
-        checkPacManDeath([ type, lineY, lineX ])
-    }
+    let ghostsIds = state.ghosts.map(g => g.id)
+    if (ghostsIds.includes(type)) checkPacManDeath([ type, lineY, lineX ])
+    
     if (type == 0) {
         addPoints(10)
         state.songEffect = new Audio('/songs/coin.mp3');

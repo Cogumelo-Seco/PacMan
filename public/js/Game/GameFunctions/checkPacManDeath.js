@@ -2,8 +2,7 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
     let ghost = state.ghosts.find(g => g.id == ghostId)
     state.pauseMovement = true
 
-    if (ghost.scared) {
-    //if (true) {
+    if (ghostId != true && ghost.scared) {
         state.morePoints.points = Math.floor(state.morePoints.oldPoints < 10000 ? state.morePoints.oldPoints*2 : state.morePoints.oldPoints)
         state.morePoints.oldPoints = state.morePoints.points
         addPoints(state.morePoints.points)
@@ -62,13 +61,6 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
                 y: lineY*state.canvas.tileSize
             }
         }
-        /*setTimeout(() => {
-            if (ghost) {
-                ghost.death = false
-                ghost.scared = false
-                ghost.dalay = 0
-            }
-        }, 2000)*/
 
         if (state.playeMusic2Timeout) clearTimeout(state.playeMusic2Timeout)
         state.playeMusic2Timeout = setTimeout(() => {
@@ -91,12 +83,8 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
         state.lifes -= 1
         state.gameStage = 'pacManDeath'
         
-        if (state.lifes > -1) {
-            setTimeout(() => {
-                state.highScore = 0
-                resetGame()
-            }, 2000)
-        } else {
+        if (state.lifes > -1) setTimeout(resetGame, 2000)
+        else {
             state.gameStage = 'gameOver'
             setTimeout(() => {
                 state.song.pause()

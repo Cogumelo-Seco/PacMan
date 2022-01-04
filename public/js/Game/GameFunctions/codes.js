@@ -1,93 +1,48 @@
-module.exports = function codesFunction(state) {
+module.exports = function codesFunction(state, checkPacManDeath, addGhost) {
     return {
-        frog: function () {
-            if (!state.ghosts.find(g => g.color == 'frog')) state.ghosts.push({
-                color: 'frog',
-                animDirection: 'up',
-                activeAnimation: false,
-                placeOfDeath: {
-                    x: 0,
-                    y: 0
-                },
-                images: {},
-                withoutGhost: 0,
-                defaultSpeed: 175,
-                speed: 175,
-                speedCounter: 0,
-                death: false,
-                locked: 0,
-                oldMap: 3,
-                dalay: 0,
-                id: 13
-            })
+        frog: function () {            
+            if (!state.ghosts.find(g => g.color == 'frog')) addGhost([ 'frog', 11, false, 170 ])
+            else return
+            return true
+        },        
+        applecat: function () {
+            if (!state.ghosts.find(g => g.color == 'apple-cat')) addGhost([ 'apple-cat', 12, true, 160 ])
             else return 
             return true
         },
         cogu: function () {
-            if (!state.ghosts.find(g => g.color == 'cogu')) state.ghosts.push({
-                color: 'cogu',
-                animDirection: 'up',
-                activeAnimation: false,
-                placeOfDeath: {
-                    x: 0,
-                    y: 0
-                },
-                images: {},
-                withoutGhost: 0,
-                defaultSpeed: 140,
-                speed: 140,
-                speedCounter: 0,
-                death: false,
-                locked: 0,
-                oldMap: 3,
-                dalay: 0,
-                id: 11
-            })
+            if (!state.ghosts.find(g => g.color == 'cogu')) addGhost([ 'cogu', 13, false, 140 ])
             else return 
             return true
         },
-        applecat: function () {
-            if (!state.ghosts.find(g => g.color == 'apple-cat')) state.ghosts.push({
-                color: 'apple-cat',
-                animDirection: 'up',
-                activeAnimation: true,
-                placeOfDeath: {
-                    x: 0,
-                    y: 0
-                },
-                images: {},
-                withoutGhost: 0,
-                defaultSpeed: 170,
-                speed: 170,
-                speedCounter: 0,
-                death: false,
-                locked: 0,
-                oldMap: 3,
-                dalay: 0,
-                id: 12
-            })
-            else return 
+        infinitenos: function () {
+            if (state.pacMan.pacManSpeed == 20 && state.ghosts[0].speed == 20) return
+            state.pacMan.pacManSpeed = 20
+            for (let ghost of state.ghosts) {
+                ghost.speed = 20
+                ghost.defaultSpeed = 20
+            }
             return true
         },
         gspeed: function () {
-            if (state.ghosts[0].speed == 110) {
+            if (state.ghosts[0].speed == 100) {
                 for (let ghost of state.ghosts) {
                     ghost.speed = ghost.defaultSpeed
                 }
                 return false
             } else {
                 for (let ghost of state.ghosts) {
-                    ghost.speed = 110
+                    ghost.speed = 100
                 }
                 return true
             }
-        },
+        },        
         speed: function () {
-            if (state.pacMan.pacManSpeed == 110) {
+            if (state.pacMan.pacManSpeed == 100) {
                 state.pacMan.pacManSpeed = state.pacMan.defaultPacManSpeed
                 return false
             } else {
-                state.pacMan.pacManSpeed = 110
+                state.pacMan.pacManSpeed = 100
                 return true
             }
         },
@@ -105,6 +60,12 @@ module.exports = function codesFunction(state) {
                     state.ghosts[i].scared = true
                     state.ghosts[i].speed = 400
                 }
+                return true
+            }
+        },
+        kill: function () {
+            if (state.gameStage == 'game') {
+                checkPacManDeath([ true ])
                 return true
             }
         },

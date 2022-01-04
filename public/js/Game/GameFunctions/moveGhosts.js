@@ -1,5 +1,6 @@
 module.exports = (state, checkPacManDeath) => {
-    let blockedPlaces = [ 1, 8, 7, 6, 5, 10, 11, 12, 13, 14, 15, 16, 17, 18 ]
+    let blockedPlaces = state.ghosts.map(g => g.id)
+    blockedPlaces.push(1)
 
     function newDirection(blockedDirection) {
         let directions = []
@@ -14,7 +15,7 @@ module.exports = (state, checkPacManDeath) => {
 
     function regenerateGhost(i, ghostId) {        
         state.ghosts[i].oldMap = 3
-
+        if (state.ghosts[i].death) return
         if (state.map[10][10] == 3) {
             state.ghosts[i].locked = 0
             state.map[10][10] = ghostId
@@ -113,14 +114,7 @@ module.exports = (state, checkPacManDeath) => {
                             break
                     }
                 }
-            } else {
-                if (state.ghosts[i].death) state.ghosts[i].withoutGhost = 5
-                state.ghosts[i].withoutGhost += 1
-                if (state.ghosts[i].withoutGhost >= 5 && !state.ghosts[i].death) {
-                    let regenerated = regenerateGhost(i, ghostId)
-                    if (regenerated) state.ghosts[i].withoutGhost = 0
-                }                
-            }
+            } else regenerateGhost(i, ghostId)
         }
     }
 }

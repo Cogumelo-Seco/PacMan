@@ -33,8 +33,8 @@ function createGame(Listener) {
             }
         },
         pacMan: {
-            defaultPacManSpeed: 190,
-            pacManSpeed: 190,
+            defaultPacManSpeed: 185,
+            pacManSpeed: 185,
             pacManSpeedCounter: 0,
             withoutPacMan: 0,
             dalay: 0
@@ -49,8 +49,7 @@ function createGame(Listener) {
                     y: 0
                 },
                 images: {},
-                withoutGhost: 0,
-                defaultSpeed: 175,
+                defaultSpeed: 170,
                 speed: 175,
                 speedCounter: 0,
                 death: false,
@@ -68,9 +67,8 @@ function createGame(Listener) {
                     y: 0
                 },
                 images: {},
-                withoutGhost: 0,
-                defaultSpeed: 185,
-                speed: 185,
+                defaultSpeed: 180,
+                speed: 180,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
@@ -87,9 +85,8 @@ function createGame(Listener) {
                     y: 0
                 },
                 images: {},
-                withoutGhost: 0,
-                defaultSpeed: 190,
-                speed: 190,
+                defaultSpeed: 185,
+                speed: 185,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
@@ -106,9 +103,8 @@ function createGame(Listener) {
                     y: 0
                 },
                 images: {},
-                withoutGhost: 0,
-                defaultSpeed: 185,
-                speed: 185,
+                defaultSpeed: 180,
+                speed: 180,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
@@ -143,12 +139,13 @@ function createGame(Listener) {
         ]
     }
 
+    const addGhost = (command) => require('./GameFunctions/addGhost')(state, Listener, command)
     const resetGame = (command) => require('./GameFunctions/resetGame')(state, Listener, command)
     const checkPacManDeath = (command) => require('./GameFunctions/checkPacManDeath')(state, addPoints, resetGame, command)
     const movePacMan = (command) => require('./GameFunctions/movePacMan')(state, checkCollision, command)
     const moveGhosts = () => require('./GameFunctions/moveGhosts')(state, checkPacManDeath)
     const checkCollision = (command) => require('./GameFunctions/checkCollision')(state, checkPacManDeath, addPoints, command)
-    const codes = require('./GameFunctions/codes')(state)
+    const codes = require('./GameFunctions/codes')(state, checkPacManDeath, addGhost)
 
     function start(command) {
         state.gameStage = 'game'
@@ -213,10 +210,11 @@ function createGame(Listener) {
     }
 
     function addPoints(points) {
-        if (state.score < 1000000000000000) state.score += points
-        else state.score = 1000000000000000
-        if (state.highScore < 1000000000000000 && state.score >= state.highScore) state.highScore = state.score
-        else state.highScore = 1000000000000000
+        let maxScore = 1000000000000000
+        if (state.score < maxScore) state.score += points
+        else state.score = maxScore
+        if (state.highScore < maxScore && state.score >= state.highScore) state.highScore = state.score
+        else if (state.highScore > maxScore) state.highScore = maxScore
     }
     
     return {

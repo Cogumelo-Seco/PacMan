@@ -3,7 +3,7 @@ module.exports = async (canvas, game, Listener,) => {
     const highScoreHUD = document.getElementById('highScore')
 
     scoreHUD.innerText = game.state.score
-    if (game.state.score >= game.state.highScore) highScoreHUD.innerText = game.state.score
+    highScoreHUD.innerText = game.state.highScore
 
     const lifesHUD = document.getElementById('lifes')
     lifesHUD.innerHTML = ''
