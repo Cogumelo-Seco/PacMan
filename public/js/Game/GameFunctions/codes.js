@@ -1,6 +1,6 @@
 module.exports = (state) => {
     return {
-        sapo: function () {
+        frog: function () {
             if (!state.ghosts.find(g => g.color == 'frog')) state.ghosts.push({
                 color: 'frog',
                 animDirection: 'up',
@@ -11,8 +11,8 @@ module.exports = (state) => {
                 },
                 images: {},
                 withoutGhost: 0,
-                defaultSpeed: 170,
-                speed: 170,
+                defaultSpeed: 175,
+                speed: 175,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
