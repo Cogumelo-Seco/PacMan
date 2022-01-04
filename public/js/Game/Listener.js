@@ -18,6 +18,8 @@ export default function createListener() {
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) state.mobile = true
 
     document.addEventListener('keydown', handleKeys)
+    let mobileButtons = document.getElementsByClassName('mobileButtons')
+    for (let button of mobileButtons) button.addEventListener('click', () => handleKeys({ key: 'arrow'+button.id.split('mobileButton')[1] }))
 
     function handleKeys(event) {
         let keyPressed = event.key ? event.key.toLowerCase() : null

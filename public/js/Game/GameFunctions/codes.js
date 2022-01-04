@@ -23,6 +23,29 @@ module.exports = (state) => {
             else return 
             return true
         },
+        cogu: function () {
+            if (!state.ghosts.find(g => g.color == 'cogu')) state.ghosts.push({
+                color: 'cogu',
+                animDirection: 'up',
+                activeAnimation: false,
+                placeOfDeath: {
+                    x: 0,
+                    y: 0
+                },
+                images: {},
+                withoutGhost: 0,
+                defaultSpeed: 140,
+                speed: 140,
+                speedCounter: 0,
+                death: false,
+                locked: 0,
+                oldMap: 3,
+                dalay: 0,
+                id: 11
+            })
+            else return 
+            return true
+        },
         applecat: function () {
             if (!state.ghosts.find(g => g.color == 'apple-cat')) state.ghosts.push({
                 color: 'apple-cat',

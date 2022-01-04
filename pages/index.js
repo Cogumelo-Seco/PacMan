@@ -54,6 +54,14 @@ const Game = (props) => {
                             <li id="lifes" />
                         </ul>
                     </div>
+
+                    <div id="mobileButtonsContaner">
+                        <button className="mobileButtons" id="mobileButtonUp" />
+                        <div className="mobileButtonsSeparator" />
+                        <button className="mobileButtons" id="mobileButtonLeft" />
+                        <button className="mobileButtons" id="mobileButtonDown" />
+                        <button className="mobileButtons" id="mobileButtonRight" />
+                    </div>
                 </section>
                 
             </body>

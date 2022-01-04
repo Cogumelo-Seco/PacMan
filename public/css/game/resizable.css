@@ -1,13 +1,18 @@
-@media screen and (max-width:597px) {
-    section h1#gameName {
-        font-size: 80px;
+@media screen and (max-width:880px) {
+    div#game {
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        width: 300px;
+        height: 375px;
+    }
+    
+    canvas#gameCanvas {
+        width: 300px;
+        height: 300px;
     }
 
-    section ul {    
-        font-size: 20px;
-        width: 300px;
-    }
-    section ul li:hover {
-        font-size: 21px;
+    div#mobileButtonsContaner {
+        display: block;
     }
 }
