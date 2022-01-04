@@ -1,4 +1,4 @@
-module.exports = (state) => {
+module.exports = function codesFunction(state) {
     return {
         frog: function () {
             if (!state.ghosts.find(g => g.color == 'frog')) state.ghosts.push({
@@ -69,12 +69,25 @@ module.exports = (state) => {
             else return 
             return true
         },
+        gspeed: function () {
+            if (state.ghosts[0].speed == 110) {
+                for (let ghost of state.ghosts) {
+                    ghost.speed = ghost.defaultSpeed
+                }
+                return false
+            } else {
+                for (let ghost of state.ghosts) {
+                    ghost.speed = 110
+                }
+                return true
+            }
+        },
         speed: function () {
-            if (state.pacMan.pacManSpeed == 113) {
+            if (state.pacMan.pacManSpeed == 110) {
                 state.pacMan.pacManSpeed = state.pacMan.defaultPacManSpeed
                 return false
             } else {
-                state.pacMan.pacManSpeed = 113
+                state.pacMan.pacManSpeed = 110
                 return true
             }
         },
@@ -95,5 +108,11 @@ module.exports = (state) => {
                 return true
             }
         },
+        codes: function () {
+            let codesText = ''
+            let codesList = codesFunction()
+            for (let i in codesList) codesText += `${i}\n`
+            return codesText
+        }
     }
 }

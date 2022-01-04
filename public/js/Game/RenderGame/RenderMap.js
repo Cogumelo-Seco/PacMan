@@ -71,25 +71,25 @@ module.exports = async (canvas, game, Listener) => {
                     case 'up':
                         if (ghost.dalay > 0) {
                             ghostY += ghost.dalay
-                            ghost.dalay -= tileSize/ghost.speed*(tileSize/2-2)
+                            //ghost.dalay -= tileSize/ghost.speed*(tileSize/2-2)
                         }
                         break
                     case 'down':
                         if (ghost.dalay > 0) {
                             ghostY -= ghost.dalay
-                            ghost.dalay -= tileSize/ghost.speed*(tileSize/2-2)
+                            //ghost.dalay -= tileSize/ghost.speed*(tileSize/2-2)
                         }
                         break
                     case 'left':
                         if (ghost.dalay > 0) {
                             ghostX += ghost.dalay
-                            ghost.dalay -= tileSize/ghost.speed*(tileSize/2-2)
+                            //ghost.dalay -= tileSize/ghost.speed*(tileSize/2-2)
                         }
                         break
                     case 'right':
                         if (ghost.dalay > 0) {
                             ghostX -= ghost.dalay
-                            ghost.dalay -= tileSize/ghost.speed*(tileSize/2-2)
+                            //ghost.dalay -= tileSize/ghost.speed*(tileSize/2-2)
                         }
                         break
                 }
@@ -114,28 +114,28 @@ module.exports = async (canvas, game, Listener) => {
                         rotate = -90
                         if (game.state.pacMan.dalay > 0) {
                             pacManY += game.state.pacMan.dalay
-                            game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
+                            //game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
                         }
                         break
                     case 'down':
                         rotate = 90
                         if (game.state.pacMan.dalay > 0) {
                             pacManY -= game.state.pacMan.dalay
-                            game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
+                            //.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
                         }
                         break
                     case 'left':
                         rotate = 180
                         if (game.state.pacMan.dalay > 0) {
                             pacManX += game.state.pacMan.dalay
-                            game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
+                            //game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
                         }
                         break
                     case 'right':
                         rotate = 0
                         if (game.state.pacMan.dalay > 0) {
                             pacManX -= game.state.pacMan.dalay
-                            game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
+                            //game.state.pacMan.dalay -= tileSize/(game.state.pacMan.pacManSpeed)*(tileSize/2-2)
                         }
                         break
                 }

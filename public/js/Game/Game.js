@@ -194,20 +194,29 @@ function createGame(Listener) {
                     let codeMessage = document.getElementById('codeMessage')                    
                     Listener.state.codeText = ''
                     let code = codes[i]()
+                    let time = 0
                     if (code != undefined) {
                         if (code == true) codeMessage.innerText = 'Cheat activated'
                         if (code == false) codeMessage.innerText = 'Cheat disabled'
+                        if (typeof code == 'string') codeMessage.innerText = code
                         codeMessage.style.display = 'block'
-                        setTimeout(() => codeMessage.style.display = 'none', 3000)
+                        time = codeMessage.innerText.length*200
+                        if (state.codesTimeout) clearTimeout(state.codesTimeout)
+                        state.codesTimeout = setTimeout(() => codeMessage.style.display = 'none', time)
                     }
                 }
             }
+
+            for (let ghost of state.ghosts) ghost.dalay -= state.canvas.tileSize/ghost.speed*(state.canvas.tileSize/2-2)
+            state.pacMan.dalay -= state.canvas.tileSize/(state.pacMan.pacManSpeed)*(state.canvas.tileSize/2-2)
         }, 1)
     }
 
     function addPoints(points) {
-        state.score += points
-        if (state.score >= state.highScore) state.highScore = state.score
+        if (state.score < 1000000000000000) state.score += points
+        else state.score = 1000000000000000
+        if (state.highScore < 1000000000000000 && state.score >= state.highScore) state.highScore = state.score
+        else state.highScore = 1000000000000000
     }
     
     return {

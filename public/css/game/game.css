@@ -18,8 +18,8 @@ div#codeMessage {
     background-color: rgb(16, 16, 16);
     left: 10px;
     top: 10px;
-    height: 40px;
-    width: 140px;
+    min-height: 40px;
+    min-width: 140px;
     line-height: 40px;
     animation: codeMessage 0.3s linear;
 }
