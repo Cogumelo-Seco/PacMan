@@ -56,7 +56,6 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
         state.song.play()        
 
         if (ghost) {
-            ghost.speed = ghost.defaultSpeed
             ghost.death = true
             ghost.placeOfDeath = {
                 x: lineX*state.canvas.tileSize,

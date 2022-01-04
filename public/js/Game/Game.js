@@ -33,6 +33,7 @@ function createGame(Listener) {
             }
         },
         pacMan: {
+            defaultPacManSpeed: 190,
             pacManSpeed: 190,
             pacManSpeedCounter: 0,
             withoutPacMan: 0,
@@ -78,7 +79,7 @@ function createGame(Listener) {
                 id: 6
             },
             {
-                color: 'yellow',
+                color: 'orange',
                 animDirection: 'up',
                 activeAnimation: true,
                 placeOfDeath: {
@@ -193,7 +194,9 @@ function createGame(Listener) {
                     let codeMessage = document.getElementById('codeMessage')                    
                     Listener.state.codeText = ''
                     let code = codes[i]()
-                    if (code) {
+                    if (code != undefined) {
+                        if (code == true) codeMessage.innerText = 'Cheat activated'
+                        if (code == false) codeMessage.innerText = 'Cheat disabled'
                         codeMessage.style.display = 'block'
                         setTimeout(() => codeMessage.style.display = 'none', 3000)
                     }

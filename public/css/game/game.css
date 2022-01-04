@@ -15,8 +15,8 @@ section {
 div#codeMessage {
     position: absolute;
     display: none;
-    background-color: rgb(53, 53, 53);
-    right: 10px;
+    background-color: rgb(16, 16, 16);
+    left: 10px;
     top: 10px;
     height: 40px;
     width: 140px;

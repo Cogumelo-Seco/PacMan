@@ -41,7 +41,7 @@ const Game = (props) => {
             <body>
 
                 <section>
-                    <div id="codeMessage">Código ativado</div>
+                    <div id="codeMessage" />
                     
                     <div id="game">
                         <ul id="gameHUD">

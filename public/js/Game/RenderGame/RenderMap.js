@@ -46,19 +46,19 @@ module.exports = async (canvas, game, Listener) => {
                 ctx.fillStyle = 'transparent'
                 ctx.fillRect(x, y, tileSize, tileSize)
             }
-            if (column >= 5 && column <= 8 || column == 13) {
+            if (column >= 5 && column <= 8 || column >= 10 && column <= 20) {
                 let ghost = game.state.ghosts.find(g => g.id == column)                
-                let ghostImage = ghost.images[ghost.color+ghost.animDirection+(ghost.animation ? 2 : 1)]//new Image();
+                let ghostImage = ghost.images[ghost.color+ghost.animDirection+(ghost.activeAnimation ? ghost.animation ? 2 : 1 : 1)]
 
                 if (!ghostImage) {
                     ghostImage = new Image();
-                    ghostImage.src = `/images/ghosts/${ghost.color}/ghost-${ghost.animDirection}-${ghost.animation ? 2 : 1}.png`;
-                    ghost.images[ghost.color+ghost.animDirection+(ghost.animation ? 1 : 2)] = ghostImage
+                    ghostImage.src = `/images/ghosts/${ghost.color}/ghost-${ghost.animDirection}-${ghost.activeAnimation ? ghost.animation ? 2 : 1 : 1}.png`;
+                    ghost.images[ghost.color+ghost.animDirection+(ghost.activeAnimation ? ghost.animation ? 2 : 1 : 1)] = ghostImage
                 }
 
                 if (ghost.scared) {
                     ghostImage = new Image();
-                    ghostImage.src = `/images/ghosts/${ghost.color}/scared/scared-ghost-${game.state.pacManKills-1500 <= +new Date() ? ghost.animation ? 1 : 2 : 1}.png`;
+                    ghostImage.src = `/images/ghosts/${ghost.color}/scared/scared-ghost-${game.state.pacManKills-1800 <= +new Date() ? ghost.animation ? 1 : 2 : 1}.png`;
                 }
 
                 let ghostY = y

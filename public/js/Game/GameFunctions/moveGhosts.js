@@ -1,5 +1,5 @@
 module.exports = (state, checkPacManDeath) => {
-    let blockedPlaces = [ 1, 8, 7, 6, 5 ]
+    let blockedPlaces = [ 1 ]//[ 1, 8, 7, 6, 5 ]
 
     function newDirection(blockedDirection) {
         let directions = []
@@ -12,8 +12,7 @@ module.exports = (state, checkPacManDeath) => {
         return directions[Math.floor(Math.random() * directions.length)]
     }
 
-    function regenerateGhost(i, ghostId) {
-        if (state.ghosts[i].death) return;
+    function regenerateGhost(i, ghostId) {        
         state.ghosts[i].oldMap = 3
 
         if (state.map[10][10] == 3) {
@@ -46,7 +45,7 @@ module.exports = (state, checkPacManDeath) => {
         if (state.ghosts[i].speedCounter <= +new Date()) {
             state.ghosts[i].speedCounter = +new Date()+state.ghosts[i].speed
 
-            if (state.ghosts[i].activeAnimation) state.ghosts[i].animation = state.ghosts[i].animation ? false : true        
+            state.ghosts[i].animation = state.ghosts[i].animation ? false : true        
 
             for (let y in state.map) {
                 if (state.map[y].includes(ghostId)) {
@@ -115,10 +114,11 @@ module.exports = (state, checkPacManDeath) => {
                     }
                 }
             } else {
+                if (state.ghosts[i].death) state.ghosts[i].withoutGhost = 5
                 state.ghosts[i].withoutGhost += 1
-                if (state.ghosts[i].withoutGhost >= 5) {
-                    state.ghosts[i].withoutGhost = 0
-                    regenerateGhost(i, ghostId)
+                if (state.ghosts[i].withoutGhost >= 5 && !state.ghosts[i].death) {
+                    let regenerated = regenerateGhost(i, ghostId)
+                    if (regenerated) state.ghosts[i].withoutGhost = 0
                 }                
             }
         }

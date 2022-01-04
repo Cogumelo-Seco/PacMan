@@ -9,7 +9,10 @@ module.exports = async (canvas, game, Listener) => {
         if (ghost.death) {
             if (ghost.placeOfDeath.x == 10*tileSize && ghost.placeOfDeath.y == 10*tileSize) {
                 ghost.death = false
-                ghost.scared = false
+                if (!game.state.scaredAlways) {
+                    ghost.scared = false
+                    ghost.speed = ghost.defaultSpeed
+                }
                 ghost.dalay = 0
             }
 

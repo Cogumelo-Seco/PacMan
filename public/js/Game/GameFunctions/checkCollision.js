@@ -1,5 +1,5 @@
 module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) => {
-    if (type == 5 || type == 6 || type == 7 || type == 8 || type == 13) {
+    if (type >= 5 && type <= 8 || type >= 10 && type <= 20) {
         checkPacManDeath([ type, lineY, lineX ])
     }
     if (type == 0) {
@@ -27,8 +27,10 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
                 state.pacManKills = 0
                 state.morePoints.oldPoints = 100
                 for (let i in state.ghosts) {
-                    state.ghosts[i].scared = false
-                    state.ghosts[i].speed = state.ghosts[i].defaultSpeed
+                    if (!state.scaredAlways) {
+                        state.ghosts[i].scared = false
+                        state.ghosts[i].speed = state.ghosts[i].defaultSpeed
+                    }
                 }
 
                 state.song.pause()
