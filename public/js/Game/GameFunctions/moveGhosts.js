@@ -1,5 +1,5 @@
 module.exports = (state, checkPacManDeath) => {
-    let blockedPlaces = [ 1 ]//[ 1, 8, 7, 6, 5 ]
+    let blockedPlaces = [ 1, 8, 7, 6, 5, 10, 11, 12, 13, 14, 15, 16, 17, 18 ]
 
     function newDirection(blockedDirection) {
         let directions = []
