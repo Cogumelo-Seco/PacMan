@@ -88,13 +88,11 @@ module.exports = (state, checkPacManDeath) => {
                         lineX = -1
                     } else if (direction == 'up' && lineY <= 0) {
                         state.map[lineY][lineX] = state.map[lineY][lineX] = state.ghosts[i].oldTile
-                        lineY = 21
+                        lineY = 22
                     } else if (direction == 'down' && lineY >= 21) {
                         state.map[lineY][lineX] = state.map[lineY][lineX] = state.ghosts[i].oldTile
                         lineY = -1
                     } else state.map[lineY][lineX] = state.ghosts[i].oldTile 
-
-                    
 
                     state.ghosts[i].dalay = state.canvas.tileSize
                     state.ghosts[i].animDirection = direction    

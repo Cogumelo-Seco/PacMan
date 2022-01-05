@@ -31,24 +31,28 @@ module.exports = (state, checkCollision, command) => {
 
         if (!direction) return;
 
+        let notOldTile = state.ghosts.map(g => g.id)
+        notOldTile.push(0)
+        notOldTile.push(2)
+
         if (direction == 'left' && lineX <= 0) {
-            if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
+            if (!notOldTile.includes(state.pacMan.oldTile)) state.map[lineY][lineX] = state.pacMan.oldTile
             else state.map[lineY][lineX] = 3
             lineX = 21
         } else if (direction == 'right' && lineX >= 20) {
-            if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
+            if (!notOldTile.includes(state.pacMan.oldTile)) state.map[lineY][lineX] = state.pacMan.oldTile
             else state.map[lineY][lineX] = 3
             lineX = -1
         } else if (direction == 'up' && lineY <= 0) {
-            if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
+            if (!notOldTile.includes(state.pacMan.oldTile)) state.map[lineY][lineX] = state.pacMan.oldTile
             else state.map[lineY][lineX] = 3
             lineY = 22
         } else if (direction == 'down' && lineY >= 21) {
-            if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
+            if (!notOldTile.includes(state.pacMan.oldTile)) state.map[lineY][lineX] = state.pacMan.oldTile
             else state.map[lineY][lineX] = 3
             lineY = -1
         } else {
-            if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
+            if (!notOldTile.includes(state.pacMan.oldTile)) state.map[lineY][lineX] = state.pacMan.oldTile
             else state.map[lineY][lineX] = 3
         }
 
