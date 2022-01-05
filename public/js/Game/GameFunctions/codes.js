@@ -15,15 +15,6 @@ module.exports = function codesFunction(state, checkPacManDeath, addGhost) {
             else return 
             return true
         },
-        infinitenos: function () {
-            if (state.pacMan.pacManSpeed == 20 && state.ghosts[0].speed == 20) return
-            state.pacMan.pacManSpeed = 20
-            for (let ghost of state.ghosts) {
-                ghost.speed = 20
-                ghost.defaultSpeed = 20
-            }
-            return true
-        },
         gspeed: function () {
             if (state.ghosts[0].speed == 100) {
                 for (let ghost of state.ghosts) {
@@ -69,7 +60,7 @@ module.exports = function codesFunction(state, checkPacManDeath, addGhost) {
                     if (state.map[y][x] == 0 || state.map[y][x] == 2) state.map[y][x] = 3
                 }
             }
-            for (let ghost of state.ghosts) ghost.oldMap = 3
+            for (let ghost of state.ghosts) ghost.oldTile = 3
             return true
         },
         kill: function () {
@@ -77,6 +68,10 @@ module.exports = function codesFunction(state, checkPacManDeath, addGhost) {
                 checkPacManDeath([ true ])
                 return true
             }
+        },
+        glitch: function () {
+            state.gameGlitched = state.gameGlitched ? false : true
+            return state.gameGlitched
         },
         codes: function () {
             let codesText = ''

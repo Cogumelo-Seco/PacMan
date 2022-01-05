@@ -1,6 +1,7 @@
-module.exports = async (canvas, game, Listener) => {
+module.exports = async (canvas, game, Listener, glitchedColor) => {
     const ctx = canvas.getContext('2d')
 
+    let glitchedPercent = Math.floor(Math.random()*100)
     let ghostsIds = game.state.ghosts.map(g => g.id)
     let tileSize = game.state.canvas.tileSize
     let map = game.state.map
@@ -13,41 +14,39 @@ module.exports = async (canvas, game, Listener) => {
             lineY = Number(lineY)
             lineX = Number(lineX)
             if (column == 0) {
-                ctx.fillStyle = '#ffb897'
+                ctx.fillStyle = game.state.gameGlitched ? glitchedColor() : '#ffb897'
 
                 ctx.beginPath();
-                ctx.arc(x+(tileSize/2), y+(tileSize/2), 5, 0, 2 * Math.PI)
+                ctx.arc(x+(tileSize/2), y+(tileSize/2), game.state.gameGlitched ? Math.floor(Math.random()*6) : 5, 0, 2 * Math.PI)
                 ctx.fill();
-            }
-            if (column == 1) {
-                let wallLineSize = 6
+            } else if (column == 1) {
+                let wallLineSize = game.state.gameGlitched ? Math.floor(Math.random()*10) : 6
+                let wallColor = game.state.gameGlitched && glitchedPercent > 80 ? glitchedColor() : '#141484'
+
                 if (game.state.gameStage == 'levelWon') {
                     if (game.state.animations.walls.dalay <= +new Date()) {
                         ctx.fillStyle = 'white'
                         if (game.state.animations.walls.dalay+game.state.animations.walls.totalDalay <= +new Date()) game.state.animations.walls.dalay = +new Date()+game.state.animations.walls.totalDalay
-                    } else ctx.fillStyle = '#141484'
-                }else ctx.fillStyle = '#141484'
+                    } else ctx.fillStyle = wallColor
+                } else ctx.fillStyle = wallColor
 
                 if (map[lineY][lineX-1] != 1) ctx.fillRect(x, y, wallLineSize, tileSize)
                 if (map[lineY][lineX+1] != 1) ctx.fillRect(x+tileSize-wallLineSize, y, wallLineSize, tileSize)
                 if (!map[lineY-1] || map[lineY-1][lineX] != 1) ctx.fillRect(x, y, tileSize, wallLineSize)
                 if (!map[lineY+1] || map[lineY+1][lineX] != 1) ctx.fillRect(x, y+tileSize-wallLineSize, tileSize, wallLineSize)
-            }
-            if (column == 2) {
-                if (game.state.animations.specialDots.dalay <= +new Date()) {
+            } else if (column == 2) {
+                if (game.state.animations.specialDots.dalay <= +new Date() && game.state.gameStage != 'pause') {
                     ctx.fillStyle = 'transparent'
                     if (game.state.animations.specialDots.dalay+game.state.animations.specialDots.totalDalay <= +new Date()) game.state.animations.specialDots.dalay = +new Date()+game.state.animations.specialDots.totalDalay
-                } else ctx.fillStyle = '#ffb897'
+                } else ctx.fillStyle = game.state.gameGlitched ? glitchedColor() : '#ffb897'
 
                 ctx.beginPath();
-                ctx.arc(x+(tileSize/2), y+(tileSize/2), 15, 0, 2 * Math.PI)
+                ctx.arc(x+(tileSize/2), y+(tileSize/2), game.state.gameGlitched ? Math.floor(Math.random()*10+5) : 15, 0, 2 * Math.PI)
                 ctx.fill();
-            }
-            if (column == 3) {
+            } else if (column == 3) {
                 ctx.fillStyle = 'transparent'
                 ctx.fillRect(x, y, tileSize, tileSize)
-            }
-            if (ghostsIds.includes(column)) {
+            } else if (ghostsIds.includes(column)) {
                 let ghost = game.state.ghosts.find(g => g.id == column)
 
                 let ghostImage = ghost.images[ghost.color+ghost.animDirection+(ghost.activeAnimation ? ghost.animation ? 2 : 1 : 1)]
@@ -83,12 +82,18 @@ module.exports = async (canvas, game, Listener) => {
                         break
                 }
 
+                if (game.state.gameGlitched) {
+                    ghostY += Math.floor(Math.random()*10)
+                    ghostY -= Math.floor(Math.random()*10)
+                    ghostX += Math.floor(Math.random()*10)
+                    ghostX -= Math.floor(Math.random()*10)
+                }
+
                 ctx.drawImage(ghostImage, ghostX, ghostY, tileSize, tileSize);
-            }
-            if (column == 9) {
+            } else if (column == 9) {
                 let pacManImage = new Image();
                 let pacManImageStage = 'closed'
-                if (game.state.animations.pacMan.dalay <= +new Date() && game.state.pacMan.animate && !game.state.pauseMovement) {
+                if (game.state.animations.pacMan.dalay <= +new Date() && game.state.pacMan.animate && !game.state.pauseMovement && game.state.gameStage != 'pause') {
                     pacManImageStage = 'semiOpen'
                     if (game.state.animations.pacMan.dalay+game.state.animations.pacMan.totalDalay/2 <= +new Date()) pacManImageStage = 'open'
                     if (game.state.animations.pacMan.dalay+game.state.animations.pacMan.totalDalay <= +new Date()) game.state.animations.pacMan.dalay = +new Date()+game.state.animations.pacMan.totalDalay
@@ -117,6 +122,14 @@ module.exports = async (canvas, game, Listener) => {
                         break
                 }
 
+                if (game.state.gameGlitched) {
+                    rotate = Math.floor(Math.random()*360)
+                    pacManY += Math.floor(Math.random()*10)
+                    pacManY -= Math.floor(Math.random()*10)
+                    pacManX += Math.floor(Math.random()*10)
+                    pacManX -= Math.floor(Math.random()*10)
+                }
+
                 ctx.save()
 
                 ctx.setTransform(1, 0, 0, 1, pacManX+(tileSize/2), pacManY+(tileSize/2));
@@ -124,7 +137,23 @@ module.exports = async (canvas, game, Listener) => {
                 ctx.drawImage(pacManImage, -tileSize/2, -tileSize/2, tileSize, tileSize);
 
                 ctx.restore()
-            }            
+            } else {
+                let glitchImage = game.state.images.glitchImage
+                if (!glitchImage) {
+                    glitchImage = new Image()
+                    glitchImage.src = '/images/glitch.png'
+                    game.state.images.glitchImage = glitchImage
+                }
+                let glitchX = x
+                let glitchY = y
+
+                glitchY += Math.floor(Math.random()*(tileSize*2/2))
+                glitchY -= Math.floor(Math.random()*(tileSize*2/2))
+                glitchX += Math.floor(Math.random()*(tileSize*2/2))
+                glitchX -= Math.floor(Math.random()*(tileSize*2/2))
+
+                ctx.drawImage(glitchImage, glitchX, glitchY, tileSize*(Math.random()+0.8), tileSize*(Math.random()+0.8));
+            }
 
             if (game.state.morePoints.points && game.state.morePoints.lineX == lineX && game.state.morePoints.lineY == lineY) {
                 ctx.fillStyle = 'cyan'

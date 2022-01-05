@@ -1,15 +1,18 @@
 module.exports = async (canvas, game, Listener) => {
     const ctx = canvas.getContext('2d')
 
-    let tileSize = 55
-    ctx.fillStyle = 'white'
+    let tileSize = 55    
 
     ctx.font = 'bold 150px pacfont'
+    ctx.fillStyle = 'yellow'
+    ctx.fillText('pac man', canvas.width/2-(ctx.measureText('pac man').width/2), 150);
+
+    ctx.fillStyle = 'black'
     ctx.fillText('PAC MAN', canvas.width/2-(ctx.measureText('PAC MAN').width/2), 150);
 
     ctx.font = 'bold 50px game'
+    ctx.fillStyle = 'white'    
     ctx.fillText('START GAME', canvas.width/2-(ctx.measureText('START GAME').width/2), canvas.height/1.5);
-
 
     let pacManImage = new Image();
     let pacManImageStage = 'closed'
@@ -23,16 +26,14 @@ module.exports = async (canvas, game, Listener) => {
     let menuAnimationX = game.state.animations.menuAnimation.menuAnimationX-(tileSize*2)
     let ghostsAnimation = game.state.animations.menuGhosts.ghostsAnimation
 
-    ctx.fillStyle = '#ffb897'
-
-    ctx.drawImage(pacManImage, menuAnimationX, canvas.height/2.5, tileSize, tileSize);
+    ctx.drawImage(pacManImage, menuAnimationX, game.state.gameGlitched ? canvas.height*Math.random()*0.1+canvas.height/3 : canvas.height/2.5, tileSize, tileSize);
     menuAnimationX -= tileSize*2-tileSize/2
 
     for (let ghost of game.state.ghosts) {
         let ghostImage = new Image();
-        ghostImage.src = `/images/ghosts/${ghost.color}/ghost-right-${ghostsAnimation ? 1 : 2}.png`
-        ctx.drawImage(ghostImage, menuAnimationX, canvas.height/2.5, tileSize, tileSize);
-        menuAnimationX -= tileSize
+        ghostImage.src = `/images/ghosts/${ghost.color}/ghost-right-${ghost.activeAnimation ? ghostsAnimation ? 1 : 2 : 1}.png`
+        ctx.drawImage(ghostImage, menuAnimationX, game.state.gameGlitched ? canvas.height*Math.random()*0.1+canvas.height/3 : canvas.height/2.5, tileSize, tileSize);
+        menuAnimationX -= game.state.gameGlitched ? tileSize*Math.random()*2 : tileSize
     }
 
     if (game.state.animations.menuGhosts.dalay <= +new Date()) {

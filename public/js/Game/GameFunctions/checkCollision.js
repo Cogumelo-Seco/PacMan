@@ -22,7 +22,7 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
         state.song.play()
 
         let interval = setInterval(() => {
-            if (state.pacManKills <= +new Date) {
+            if (state.pacManKills <= +new Date()) {
                 clearInterval(interval)                
                 state.pacManKills = 0
                 state.morePoints.oldPoints = 100

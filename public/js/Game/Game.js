@@ -1,11 +1,15 @@
 function createGame(Listener) {
     const state = {
+        mapColor: 300,
         lifes: 2,
         highScore: 0,
         score: 0,
         gameStage: 'home',
         pacManKills: 0,
-        pauseMovement: false,
+        gameGlitched: false,
+        gameGlitchedStage: 1,
+        pauseMovement: true,
+        images: {},
         canvas: {
             width: 1050,
             height: 1100,
@@ -47,6 +51,7 @@ function createGame(Listener) {
             pacManSpeed: 185,
             pacManSpeedCounter: 0,
             withoutPacMan: 0,
+            oldTile: 3,
             dalay: 0
         },
         ghosts: [
@@ -64,7 +69,7 @@ function createGame(Listener) {
                 speedCounter: 0,
                 death: false,
                 locked: 0,
-                oldMap: 3,
+                oldTile: 3,
                 dalay: 0,
                 id: 5
             },
@@ -82,7 +87,7 @@ function createGame(Listener) {
                 speedCounter: 0,
                 death: false,
                 locked: 0,
-                oldMap: 3,
+                oldTile: 3,
                 dalay: 0,
                 id: 6
             },
@@ -100,7 +105,7 @@ function createGame(Listener) {
                 speedCounter: 0,
                 death: false,
                 locked: 0,
-                oldMap: 3,
+                oldTile: 3,
                 dalay: 0,
                 id: 7
             },
@@ -118,7 +123,7 @@ function createGame(Listener) {
                 speedCounter: 0,
                 death: false,
                 locked: 0,
-                oldMap: 3,
+                oldTile: 3,
                 dalay: 0,
                 id: 8
             }
@@ -158,13 +163,15 @@ function createGame(Listener) {
     const codes = require('./GameFunctions/codes')(state, checkPacManDeath, addGhost)
 
     function start(command) {
-        state.gameStage = 'game'
-        state.pauseMovement = false
+        if (command.startGame) {
+            state.gameStage = 'game'
+            state.pauseMovement = false
 
-        state.song = new Audio('/songs/music2.mp3');
-        state.song.loop = true
-        state.song.volume = 0.3
-        state.song.play()
+            state.song = new Audio('/songs/music2.mp3');
+            state.song.loop = true
+            state.song.volume = 0.3
+            state.song.play()
+        }
 
         if (state.gameInterval) clearInterval(state.gameInterval)
         state.gameInterval = setInterval(() => {
@@ -184,7 +191,7 @@ function createGame(Listener) {
                 setTimeout(() => resetGame([ true ]), 4000)                
             }
             
-            if (!state.pauseMovement) {
+            if (!state.pauseMovement && state.gameStage != 'pause') {
                 if (state.pacMan.pacManSpeedCounter <= +new Date()) {
                     state.pacMan.pacManSpeedCounter = +new Date()+state.pacMan.pacManSpeed
                     movePacMan(
@@ -216,8 +223,32 @@ function createGame(Listener) {
                 }
             }
 
-            for (let ghost of state.ghosts) ghost.dalay -= state.canvas.tileSize/ghost.speed*(state.canvas.tileSize/2-2)
-            state.pacMan.dalay -= state.canvas.tileSize/(state.pacMan.pacManSpeed)*(state.canvas.tileSize/2-2)
+            if (Listener.state.keys.escape && state.gameStage == 'game') {
+                state.gameStage = 'pause'
+                state.song.pause()
+                state.scaredPauseTime = state.pacManKills-+new Date()
+                Listener.state.keys.escape = false
+            } else if (Listener.state.keys.escape && state.gameStage == 'pause') {
+                state.gameStage = 'game'
+                state.song.play()
+                state.pacManKills = +new Date()+state.scaredPauseTime
+                Listener.state.keys.escape = false
+            } else if (state.gameStage == 'pause') state.pacManKills += 1000
+
+            for (let ghost of state.ghosts) {
+                if (ghost.dalay > 0) ghost.dalay -= state.canvas.tileSize/ghost.speed*(state.canvas.tileSize/2-2)
+            }
+            if (state.pacMan.dalay > 0) state.pacMan.dalay -= state.canvas.tileSize/(state.pacMan.pacManSpeed)*(state.canvas.tileSize/2-2)
+
+            if (state.gameGlitched && state.gameStage != 'pause' && state.gameStage != 'home') {
+                let percent = Math.floor(Math.random()*100)
+                if (percent >= 100-state.gameGlitchedStage) {
+                    let x = Math.floor(Math.random()*state.map.length)
+                    let y = Math.floor(Math.random()*state.map[x].length)
+                    state.map[x][y] = Math.floor(Math.random()*20)
+                    state.gameGlitchedStage += 0.15
+                }
+            }
         }, 1)
     }
 

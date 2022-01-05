@@ -4,6 +4,7 @@ export default function createListener() {
         direction: 'left',
         oldDirection: 'up',
         mobile: false,
+        keys: {},
         codeText: ''
     }
 
@@ -18,12 +19,14 @@ export default function createListener() {
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) state.mobile = true
 
     document.addEventListener('keydown', handleKeys)
+    document.addEventListener('keyup', (event) => state.keys[event.key ? event.key.toLowerCase() : null] = false)
     let mobileButtons = document.getElementsByClassName('mobileButtons')
     for (let button of mobileButtons) button.addEventListener('click', () => handleKeys({ key: 'arrow'+button.id.split('mobileButton')[1] }))
 
     function handleKeys(event) {
         let keyPressed = event.key ? event.key.toLowerCase() : null
 
+        if (!event.repeat) state.keys[keyPressed] = true
         state.codeText += keyPressed
 
         if (keyPressed == 'w' || keyPressed == 'arrowup') {

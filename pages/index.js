@@ -13,7 +13,7 @@ const Game = (props) => {
         const Listener = createListener();
         const game = createGame(Listener);
 
-        console.log(window.innerWidth)
+        game.start({ Listener })
 
         canvas.addEventListener('click', (a) => {
             if (
@@ -30,6 +30,7 @@ const Game = (props) => {
 
                 setTimeout(() => game.start({
                     Listener,
+                    startGame: true
                 }), 4500)
             }
         })

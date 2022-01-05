@@ -13,7 +13,7 @@ module.exports = (state, Listener, [ resetAll, gameOver ]) => {
             }
         }
 
-        if (lineX != null && lineY != null) state.map[lineY][lineX] = state.ghosts[i].oldMap
+        if (lineX != null && lineY != null) state.map[lineY][lineX] = state.ghosts[i].oldTile
     }
 
     let removePacManCount = 0
@@ -48,7 +48,7 @@ module.exports = (state, Listener, [ resetAll, gameOver ]) => {
         ghost.animDirection = 'up'
         ghost.death = false
         ghost.locked = 0
-        ghost.oldMap = 3
+        ghost.oldTile = 3
         ghost.dalay = 0
     }
 

@@ -14,7 +14,7 @@ module.exports = (state, Listener, [ name, id, activeAnimation, speed ]) => {
         speedCounter: 0,
         death: false,
         locked: 0,
-        oldMap: 3,
+        oldTile: 3,
         dalay: 0,
         id
     })

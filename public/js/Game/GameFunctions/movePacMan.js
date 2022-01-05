@@ -19,25 +19,38 @@ module.exports = (state, checkCollision, command) => {
         state.pacMan.withoutPacMan = 0
         state.pacMan.animate = false
 
-        if (direction == 'up' && state.map[lineY-1][lineX] == 1) direction = command.oldDirection
-        if (direction == 'down' && state.map[lineY+1][lineX] == 1) direction = command.oldDirection
-        if (direction == 'left' && state.map[lineY][lineX-1] == 1) direction = command.oldDirection
-        if (direction == 'right' && state.map[lineY][lineX+1] == 1) direction = command.oldDirection
+        if (direction == 'up' && state.map[lineY-1] ? state.map[lineY-1][lineX] == 1 : null) direction = command.oldDirection
+        if (direction == 'down' && state.map[lineY+1] ? state.map[lineY+1][lineX] == 1 : null) direction = command.oldDirection
+        if (direction == 'left' && state.map[lineY] ? state.map[lineY][lineX-1] == 1 : null) direction = command.oldDirection
+        if (direction == 'right' && state.map[lineY] ? state.map[lineY][lineX+1] == 1 : null) direction = command.oldDirection
 
-        if (direction == 'up' && state.map[lineY-1][lineX] == 1) direction = null
-        if (direction == 'down' && state.map[lineY+1][lineX] == 1) direction = null
-        if (direction == 'left' && state.map[lineY][lineX-1] == 1) direction = null
-        if (direction == 'right' && state.map[lineY][lineX+1] == 1) direction = null
+        if (direction == 'up' && state.map[lineY-1] ? state.map[lineY-1][lineX] == 1 : null) direction = null
+        if (direction == 'down' && state.map[lineY+1] ? state.map[lineY+1][lineX] == 1 : null) direction = null
+        if (direction == 'left' && state.map[lineY] ? state.map[lineY][lineX-1] == 1 : null) direction = null
+        if (direction == 'right' && state.map[lineY] ? state.map[lineY][lineX+1] == 1 : null) direction = null
 
         if (!direction) return;
 
         if (direction == 'left' && lineX <= 0) {
-            state.map[lineY][lineX] = 3
+            if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
+            else state.map[lineY][lineX] = 3
             lineX = 21         
         } else if (direction == 'right' && lineX >= 20) {
-            state.map[lineY][lineX] = 3
+            if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
+            else state.map[lineY][lineX] = 3
             lineX = -1
-        } else state.map[lineY][lineX] = 3
+        } else if (direction == 'up' && lineY <= 0) {
+            if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
+            else state.map[lineY][lineX] = 3
+            lineY = 21
+        } else if (direction == 'down' && lineY >= 21) {
+            if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
+            else state.map[lineY][lineX] = 3
+            lineY = -1
+        } else {
+            if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
+            else state.map[lineY][lineX] = 3
+        }
 
         state.pacMan.animate = true
         state.pacMan.animDirection = direction
@@ -45,18 +58,22 @@ module.exports = (state, checkCollision, command) => {
 
         switch(direction) {
             case 'up':
+                state.pacMan.oldTile = state.map[lineY-1][lineX]
                 checkCollision([ state.map[lineY-1][lineX], lineY-1, lineX ])
                 state.map[lineY-1][lineX] = 9
                 break
             case 'down':
+                state.pacMan.oldTile = state.map[lineY+1][lineX]
                 checkCollision([ state.map[lineY+1][lineX], lineY+1, lineX ])
                 state.map[lineY+1][lineX] = 9
                 break
             case 'left':
+                state.pacMan.oldTile = state.map[lineY][lineX-1]
                 checkCollision([ state.map[lineY][lineX-1], lineY, lineX-1] )
                 state.map[lineY][lineX-1] = 9
                 break
             case 'right':
+                state.pacMan.oldTile = state.map[lineY][lineX+1]
                 checkCollision([ state.map[lineY][lineX+1], lineY, lineX+1 ])
                 state.map[lineY][lineX+1] = 9
                 break

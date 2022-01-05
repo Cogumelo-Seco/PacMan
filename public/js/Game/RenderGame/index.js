@@ -1,11 +1,30 @@
 module.exports = function renderGame(canvas, game, Listener) {
-    canvas.width = game.state.canvas.width
-    canvas.height = game.state.canvas.height
+    let glitchedPercent = Math.floor(Math.random()*100)
+    canvas.width = game.state.gameGlitched && glitchedPercent > 95 ? game.state.canvas.width*Math.random() : game.state.canvas.width
+    canvas.height = game.state.gameGlitched && glitchedPercent > 95  ? game.state.canvas.height*Math.random() : game.state.canvas.height
 
     const ctx = canvas.getContext('2d')
 
-    ctx.fillStyle = 'black'
+    function glitchedColor() {
+        let colors = [
+            'lime',
+            'cyan',
+            'blue',
+            '#ff00b3',
+            'transparent',
+            'white'
+        ]
+        return colors[Math.floor(Math.random()*colors.length)]
+    }
+
+    ctx.fillStyle = game.state.gameGlitched ? glitchedColor() : 'black'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
+    if (game.state.gameGlitched && glitchedPercent < 98) {
+        ctx.fillStyle = 'black'
+        ctx.globalAlpha = 0.95
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        ctx.globalAlpha = 1
+    }
 
     /*let backgroundImage = new Image();
     backgroundImage.src = '/images/background.png';
@@ -14,7 +33,7 @@ module.exports = function renderGame(canvas, game, Listener) {
     if (game.state.gameStage == 'home') {
         require('./RenderHome')(canvas, game, Listener)
     } else {
-        require('./RenderMap')(canvas, game, Listener)
+        require('./RenderMap')(canvas, game, Listener, glitchedColor)
         require('./RenderGhostDeath')(canvas, game, Listener)
         require('./RenderTexts')(canvas, game, Listener)
         require('./RenderHUD')(canvas, game, Listener)

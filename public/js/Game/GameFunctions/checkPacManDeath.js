@@ -7,7 +7,7 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
         state.morePoints.oldPoints = state.morePoints.points
         addPoints(state.morePoints.points)
 
-        state.morePoints.time = +new Date()+2000
+        state.morePoints.time = +new Date()+2500
         state.morePoints.lineX = lineX
         state.morePoints.lineY = lineY
 
@@ -92,6 +92,7 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
                 state.pauseMovement = true
                 state.gameStage = 'home'
                 state.highScore = 0
+                state.gameGlitchedStage = 1
                 resetGame([ true, true ])
 
                 document.getElementById('score').style.display = 'none'
