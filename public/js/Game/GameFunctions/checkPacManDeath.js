@@ -89,8 +89,13 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
             setTimeout(() => {
                 state.song.pause()
                 state.pauseMovement = true
-                state.gameStage = 'game'
+                state.gameStage = 'home'
+                state.highScore = 0
                 resetGame(true)
+
+                document.getElementById('score').style.display = 'none'
+                document.getElementById('highScoreTitle').style.display = 'none'
+                document.getElementById('highScore').style.display = 'none'
             }, 5000)
         }
     }

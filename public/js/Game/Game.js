@@ -3,7 +3,7 @@ function createGame(Listener) {
         lifes: 2,
         highScore: 0,
         score: 0,
-        gameStage: 'initial',
+        gameStage: 'home',
         pacManKills: 0,
         pauseMovement: false,
         canvas: {
@@ -30,7 +30,17 @@ function createGame(Listener) {
             specialDots: {
                 totalDalay: 170,
                 dalay: 0
-            }
+            },
+            menuGhosts: {
+                totalDalay: 200,
+                dalay: 0,
+                ghostsAnimation: true
+            },
+            menuAnimation: {
+                totalDalay: 25,
+                dalay: 0,
+                menuAnimationX: 0
+            },
         },
         pacMan: {
             defaultPacManSpeed: 185,
@@ -149,13 +159,15 @@ function createGame(Listener) {
 
     function start(command) {
         state.gameStage = 'game'
+        state.pauseMovement = false
 
         state.song = new Audio('/songs/music2.mp3');
         state.song.loop = true
         state.song.volume = 0.3
         state.song.play()
 
-        setInterval(() => {
+        if (state.gameInterval) clearInterval(state.gameInterval)
+        state.gameInterval = setInterval(() => {
             let dots = 0
 
             for (let y in state.map) {

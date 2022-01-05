@@ -95,20 +95,22 @@ module.exports = (state, Listener, resetAll) => {
     Listener.state.direction = 'left'
     Listener.state.oldDirection = 'up'    
 
-    state.song.pause()
-    state.song = new Audio('/songs/music1.mp3');
-    state.song.loop = false
-    state.song.volume = 1
-    state.song.play()
-    state.gameStage = 'initial'
-
-    setTimeout(() => {
-        state.gameStage = 'game'
-        state.pauseMovement = false
-
-        state.song = new Audio('/songs/music2.mp3');
-        state.song.loop = true
-        state.song.volume = 0.3
+    if (!resetAll) {
+        state.song.pause()
+        state.song = new Audio('/songs/music1.mp3');
+        state.song.loop = false
+        state.song.volume = 1
         state.song.play()
-    }, 4500)
+        state.gameStage = 'initial'
+
+        setTimeout(() => {
+            state.gameStage = 'game'
+            state.pauseMovement = false
+
+            state.song = new Audio('/songs/music2.mp3');
+            state.song.loop = true
+            state.song.volume = 0.3
+            state.song.play()
+        }, 4500)
+    }
 }

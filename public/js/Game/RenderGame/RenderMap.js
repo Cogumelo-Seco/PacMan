@@ -128,7 +128,7 @@ module.exports = async (canvas, game, Listener) => {
 
             if (game.state.morePoints.points && game.state.morePoints.lineX == lineX && game.state.morePoints.lineY == lineY) {
                 ctx.fillStyle = 'cyan'
-                ctx.font = 'bold 30px Arial'
+                ctx.font = 'bold 30px game'
                 ctx.fillText(game.state.morePoints.points, x+(tileSize/2)-(ctx.measureText(game.state.morePoints.points).width/2), y+35);
                 if (game.state.morePoints.time <= +new Date()) game.state.morePoints.points = 0
             }

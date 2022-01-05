@@ -13,14 +13,26 @@ const Game = (props) => {
         const Listener = createListener();
         const game = createGame(Listener);
 
-        setTimeout(() => {
-            game.state.song = new Audio('/songs/music1.mp3');
-            game.state.song.play()
+        console.log(window.innerWidth)
 
-            setTimeout(() => game.start({
-                Listener,
-            }), 4500)
-        }, 3000)
+        canvas.addEventListener('click', (a) => {
+            if (
+                a.layerX > -84 && a.layerX < 84 && a.layerY > 25 && a.layerY < 45 && game.state.gameStage == 'home' && window.innerWidth >= 750 ||
+                a.layerX > -50 && a.layerX < 50 && a.layerY > 188 && a.layerY < 200 && game.state.gameStage == 'home' && window.innerWidth <= 750
+            ) {
+                game.state.gameStage = 'initial'
+                game.state.song = new Audio('/songs/music1.mp3');
+                game.state.song.play()
+
+                document.getElementById('score').style.display = 'block'
+                document.getElementById('highScoreTitle').style.display = 'block'
+                document.getElementById('highScore').style.display = 'block'
+
+                setTimeout(() => game.start({
+                    Listener,
+                }), 4500)
+            }
+        })
 
         renderGame(canvas, game, Listener);
     }, [])
@@ -34,6 +46,7 @@ const Game = (props) => {
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 
+                <link rel="stylesheet" href="/css/game/fonts.css" />
                 <link rel="stylesheet" href="/css/game/animations.css" />
                 <link rel="stylesheet" href="/css/game/game.css" />
                 <link rel="stylesheet" href="/css/game/resizable.css" />

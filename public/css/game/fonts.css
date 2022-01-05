@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'pacfont';
+    src: url(/fonts/pacfont.ttf);
+}
+
+@font-face {
+    font-family: 'game';
+    src: url(/fonts/game.ttf);
+}

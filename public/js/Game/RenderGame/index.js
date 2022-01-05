@@ -11,10 +11,14 @@ module.exports = function renderGame(canvas, game, Listener) {
     backgroundImage.src = '/images/background.png';
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);*/
 
-    require('./RenderMap')(canvas, game, Listener)
-    require('./RenderGhostDeath')(canvas, game, Listener)
-    require('./RenderTexts')(canvas, game, Listener)
-    require('./RenderHUD')(canvas, game, Listener)
+    if (game.state.gameStage == 'home') {
+        require('./RenderHome')(canvas, game, Listener)
+    } else {
+        require('./RenderMap')(canvas, game, Listener)
+        require('./RenderGhostDeath')(canvas, game, Listener)
+        require('./RenderTexts')(canvas, game, Listener)
+        require('./RenderHUD')(canvas, game, Listener)
+    }
 
     let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
 
