@@ -34,7 +34,7 @@ module.exports = (state, checkCollision, command) => {
         if (direction == 'left' && lineX <= 0) {
             if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
             else state.map[lineY][lineX] = 3
-            lineX = 21         
+            lineX = 21
         } else if (direction == 'right' && lineX >= 20) {
             if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
             else state.map[lineY][lineX] = 3
@@ -42,7 +42,7 @@ module.exports = (state, checkCollision, command) => {
         } else if (direction == 'up' && lineY <= 0) {
             if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
             else state.map[lineY][lineX] = 3
-            lineY = 21
+            lineY = 22
         } else if (direction == 'down' && lineY >= 21) {
             if (state.pacMan.oldTile != 0 && state.pacMan.oldTile != 2) state.map[lineY][lineX] = state.pacMan.oldTile
             else state.map[lineY][lineX] = 3
