@@ -63,6 +63,15 @@ module.exports = function codesFunction(state, checkPacManDeath, addGhost) {
                 return true
             }
         },
+        win: function () {
+            for (let y in state.map) {
+                for (let x in state.map[y]) {
+                    if (state.map[y][x] == 0 || state.map[y][x] == 2) state.map[y][x] = 3
+                }
+            }
+            for (let ghost of state.ghosts) ghost.oldMap = 3
+            return true
+        },
         kill: function () {
             if (state.gameStage == 'game') {
                 checkPacManDeath([ true ])

@@ -15,12 +15,13 @@ section {
 div#codeMessage {
     position: absolute;
     display: none;
-    background-color: rgb(16, 16, 16);
     left: 10px;
     top: 10px;
     min-height: 40px;
     min-width: 140px;
     line-height: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(16, 16, 16);
     animation: codeMessage 0.3s linear;
 }
 

@@ -1,4 +1,4 @@
-module.exports = (state, Listener, resetAll) => {
+module.exports = (state, Listener, [ resetAll, gameOver ]) => {
     for (let i in state.ghosts) {
         let ghostId = state.ghosts[i].id
         let lineX = null
@@ -95,7 +95,7 @@ module.exports = (state, Listener, resetAll) => {
     Listener.state.direction = 'left'
     Listener.state.oldDirection = 'up'    
 
-    if (!resetAll) {
+    if (!gameOver) {
         state.song.pause()
         state.song = new Audio('/songs/music1.mp3');
         state.song.loop = false

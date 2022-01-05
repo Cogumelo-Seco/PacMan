@@ -83,15 +83,16 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
         state.lifes -= 1
         state.gameStage = 'pacManDeath'
         
-        if (state.lifes > -1) setTimeout(resetGame, 2000)
-        else {
+        if (state.lifes > -1) {
+            setTimeout(() => resetGame([]), 2000)
+        } else {
             state.gameStage = 'gameOver'
             setTimeout(() => {
                 state.song.pause()
                 state.pauseMovement = true
                 state.gameStage = 'home'
                 state.highScore = 0
-                resetGame(true)
+                resetGame([ true, true ])
 
                 document.getElementById('score').style.display = 'none'
                 document.getElementById('highScoreTitle').style.display = 'none'

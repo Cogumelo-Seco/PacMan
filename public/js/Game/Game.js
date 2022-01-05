@@ -181,7 +181,7 @@ function createGame(Listener) {
                 state.song.pause()
                 state.pauseMovement = true
                 state.gameStage = 'levelWon'
-                setTimeout(() => resetGame(true), 4000)                
+                setTimeout(() => resetGame([ true ]), 4000)                
             }
             
             if (!state.pauseMovement) {
