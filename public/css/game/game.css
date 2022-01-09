@@ -31,7 +31,7 @@ div#game {
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
     width: 500px;
-    height: 575px;
+    height: 574px;
     background-color: black;
 }
 

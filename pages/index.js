@@ -52,9 +52,9 @@ const Game = (props) => {
                 <link rel="stylesheet" href="/css/game/game.css" />
                 <link rel="stylesheet" href="/css/game/resizable.css" />
             </Head>
-            <body>
+            <body id="body">
 
-                <section>
+                <section id="section">
                     <div id="codeMessage" />
                     
                     <div id="game">

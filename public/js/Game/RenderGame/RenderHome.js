@@ -11,7 +11,7 @@ module.exports = async (canvas, game, Listener) => {
     ctx.fillText('PAC MAN', canvas.width/2-(ctx.measureText('PAC MAN').width/2), 150);
 
     ctx.font = 'bold 50px game'
-    ctx.fillStyle = 'white'    
+    ctx.fillStyle = game.state.darkTheme ? 'white' : 'black'
     ctx.fillText('START GAME', canvas.width/2-(ctx.measureText('START GAME').width/2), canvas.height/1.5);
 
     let pacManImage = new Image();
@@ -31,7 +31,8 @@ module.exports = async (canvas, game, Listener) => {
 
     for (let ghost of game.state.ghosts) {
         let ghostImage = new Image();
-        ghostImage.src = `/images/ghosts/${ghost.color}/ghost-right-${ghost.activeAnimation ? ghostsAnimation ? 1 : 2 : 1}.png`
+        if (ghost.scared) ghostImage.src = `/images/ghosts/${ghost.color}/scared/scared-ghost-1.png`
+        else ghostImage.src = `/images/ghosts/${ghost.color}/ghost-right-${ghost.activeAnimation ? ghostsAnimation ? 1 : 2 : 1}.png`
         ctx.drawImage(ghostImage, menuAnimationX, game.state.gameGlitched ? canvas.height*Math.random()*0.1+canvas.height/3 : canvas.height/2.5, tileSize, tileSize);
         menuAnimationX -= game.state.gameGlitched ? tileSize*Math.random()*2 : tileSize
     }

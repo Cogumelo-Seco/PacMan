@@ -9,6 +9,7 @@ function createGame(Listener) {
         gameGlitched: false,
         gameGlitchedStage: 1,
         pauseMovement: true,
+        darkTheme: true,
         images: {},
         canvas: {
             width: 1050,
@@ -59,6 +60,7 @@ function createGame(Listener) {
                 color: 'red',
                 animDirection: 'up',
                 activeAnimation: true,
+                scared: false,
                 placeOfDeath: {
                     x: 0,
                     y: 0
@@ -77,6 +79,7 @@ function createGame(Listener) {
                 color: 'pink',
                 animDirection: 'up',
                 activeAnimation: true,
+                scared: false,
                 placeOfDeath: {
                     x: 0,
                     y: 0
@@ -95,6 +98,7 @@ function createGame(Listener) {
                 color: 'orange',
                 animDirection: 'up',
                 activeAnimation: true,
+                scared: false,
                 placeOfDeath: {
                     x: 0,
                     y: 0
@@ -113,6 +117,7 @@ function createGame(Listener) {
                 color: 'cyan',
                 animDirection: 'up',
                 activeAnimation: true,
+                scared: false,
                 placeOfDeath: {
                     x: 0,
                     y: 0
@@ -198,8 +203,12 @@ function createGame(Listener) {
 
         if (state.gameInterval) clearInterval(state.gameInterval)
         state.gameInterval = setInterval(() => {
-            let dots = 0
+            for (let ghost of state.ghosts) {
+                if (ghost.dalay > 0) ghost.dalay -= state.canvas.tileSize/ghost.speed*(state.canvas.tileSize/2-2)
+            }
+            if (state.pacMan.dalay > 0) state.pacMan.dalay -= state.canvas.tileSize/(state.pacMan.pacManSpeed)*(state.canvas.tileSize/2-2)
 
+            let dots = 0
             for (let y in state.map) {
                 for (let x in state.map[y]) {
                     if (state.map[y][x] == 0 || state.map[y][x] == 2) dots += 1
@@ -257,11 +266,6 @@ function createGame(Listener) {
                 state.pacManKills = +new Date()+state.scaredPauseTime
                 Listener.state.keys.escape = false
             } else if (state.gameStage == 'pause') state.pacManKills += 1000
-
-            for (let ghost of state.ghosts) {
-                if (ghost.dalay > 0) ghost.dalay -= state.canvas.tileSize/ghost.speed*(state.canvas.tileSize/2-2)
-            }
-            if (state.pacMan.dalay > 0) state.pacMan.dalay -= state.canvas.tileSize/(state.pacMan.pacManSpeed)*(state.canvas.tileSize/2-2)
 
             if (state.gameGlitched && state.gameStage != 'pause' && state.gameStage != 'home') {
                 let percent = Math.floor(Math.random()*100)

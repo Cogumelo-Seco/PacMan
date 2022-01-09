@@ -3,6 +3,7 @@ module.exports = (state, Listener, [ name, id, activeAnimation, speed ]) => {
         color: name,
         animDirection: 'up',
         activeAnimation,
+        scared: false,
         placeOfDeath: {
             x: 0,
             y: 0

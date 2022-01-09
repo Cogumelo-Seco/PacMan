@@ -2,7 +2,7 @@ module.exports = async (canvas, game, Listener) => {
     const ctx = canvas.getContext('2d')
 
     if (game.state.gameStage == 'initial') {
-        ctx.fillStyle = 'yellow'
+        ctx.fillStyle = game.state.darkTheme ? 'yellow' : 'gold'
         ctx.font = `bold ${game.state.gameGlitched ? Math.floor(Math.random()*40+10) : 35}px game`
         ctx.fillText('READY!', canvas.width/2-(ctx.measureText('READY!').width/2), canvas.height/1.725);
     }
@@ -14,7 +14,7 @@ module.exports = async (canvas, game, Listener) => {
     }
 
     if (game.state.gameStage == 'pause') {
-        ctx.fillStyle = 'white'
+        ctx.fillStyle = game.state.darkTheme ? 'white' : 'black'
         ctx.font = `bold ${game.state.gameGlitched ? Math.floor(Math.random()*40+10) : 35}px game`
         ctx.fillText('PAUSE', canvas.width/2-(ctx.measureText('PAUSE').width/2), canvas.height/1.725);
     }

@@ -55,6 +55,7 @@ module.exports = function codesFunction(state, checkPacManDeath, addGhost) {
             }
         },
         win: function () {
+            if (state.gameStage != 'game') return
             for (let y in state.map) {
                 for (let x in state.map[y]) {
                     if (state.map[y][x] == 0 || state.map[y][x] == 2) state.map[y][x] = 3
@@ -64,14 +65,17 @@ module.exports = function codesFunction(state, checkPacManDeath, addGhost) {
             return true
         },
         kill: function () {
-            if (state.gameStage == 'game') {
-                checkPacManDeath([ true ])
-                return true
-            }
+            if (state.gameStage != 'game') return
+            checkPacManDeath([ true ])
+            return true
         },
         glitch: function () {
             state.gameGlitched = state.gameGlitched ? false : true
             return state.gameGlitched
+        },
+        lighttheme: function () {
+            state.darkTheme = state.darkTheme ? false : true
+            return state.darkTheme ? false : true
         },
         codes: function () {
             let codesText = ''

@@ -1,6 +1,11 @@
 module.exports = async (canvas, game, Listener,) => {
     const scoreHUD = document.getElementById('score')
     const highScoreHUD = document.getElementById('highScore')
+    const highScoreTitle = document.getElementById('highScoreTitle')
+
+    scoreHUD.style.color = game.state.darkTheme ? 'white' : 'black'
+    highScoreHUD.style.color = game.state.darkTheme ? 'white' : 'black'
+    highScoreTitle.style.color = game.state.darkTheme ? 'white' : 'black'
 
     scoreHUD.innerText = game.state.score
     highScoreHUD.innerText = game.state.highScore

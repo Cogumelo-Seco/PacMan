@@ -17,18 +17,18 @@ module.exports = function renderGame(canvas, game, Listener) {
         return colors[Math.floor(Math.random()*colors.length)]
     }
 
-    ctx.fillStyle = game.state.gameGlitched ? glitchedColor() : 'black'
+    ctx.fillStyle = game.state.gameGlitched ? glitchedColor() : game.state.darkTheme ? 'black' : 'white'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     if (game.state.gameGlitched && glitchedPercent < 98) {
-        ctx.fillStyle = 'black'
+        ctx.fillStyle = game.state.darkTheme ? 'black' : 'white'
         ctx.globalAlpha = 0.95
         ctx.fillRect(0, 0, canvas.width, canvas.height)
         ctx.globalAlpha = 1
     }
 
-    /*let backgroundImage = new Image();
-    backgroundImage.src = '/images/background.png';
-    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);*/
+    document.getElementById('game').style.backgroundColor = game.state.darkTheme ? 'black' : 'white'
+    document.getElementById('body').style.backgroundColor = game.state.darkTheme ? '#222' : 'rgb(150, 150, 150)'
+    document.getElementById('section').style.backgroundColor = game.state.darkTheme ? '#222' : 'rgb(150, 150, 150)'
 
     if (game.state.gameStage == 'home') {
         require('./RenderHome')(canvas, game, Listener)

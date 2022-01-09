@@ -14,7 +14,7 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
             lineY = Number(lineY)
             lineX = Number(lineX)
             if (column == 0) {
-                ctx.fillStyle = game.state.gameGlitched ? glitchedColor() : '#ffb897'
+                ctx.fillStyle = game.state.gameGlitched ? glitchedColor() : game.state.darkTheme ? '#ffb897' : 'rgb(50, 50, 50)'
 
                 ctx.beginPath();
                 ctx.arc(x+(tileSize/2), y+(tileSize/2), game.state.gameGlitched ? Math.floor(Math.random()*6) : 5, 0, 2 * Math.PI)
@@ -25,7 +25,7 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
 
                 if (game.state.gameStage == 'levelWon') {
                     if (game.state.animations.walls.dalay <= +new Date()) {
-                        ctx.fillStyle = 'white'
+                        ctx.fillStyle = game.state.darkTheme ? 'white' : 'black'
                         if (game.state.animations.walls.dalay+game.state.animations.walls.totalDalay <= +new Date()) game.state.animations.walls.dalay = +new Date()+game.state.animations.walls.totalDalay
                     } else ctx.fillStyle = wallColor
                 } else ctx.fillStyle = wallColor
@@ -38,7 +38,7 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
                 if (game.state.animations.specialDots.dalay <= +new Date() && game.state.gameStage != 'pause') {
                     ctx.fillStyle = 'transparent'
                     if (game.state.animations.specialDots.dalay+game.state.animations.specialDots.totalDalay <= +new Date()) game.state.animations.specialDots.dalay = +new Date()+game.state.animations.specialDots.totalDalay
-                } else ctx.fillStyle = game.state.gameGlitched ? glitchedColor() : '#ffb897'
+                } else ctx.fillStyle = game.state.gameGlitched ? glitchedColor() : game.state.darkTheme ? '#ffb897' : 'rgb(50, 50, 50)'
 
                 ctx.beginPath();
                 ctx.arc(x+(tileSize/2), y+(tileSize/2), game.state.gameGlitched ? Math.floor(Math.random()*10+5) : 15, 0, 2 * Math.PI)
@@ -147,12 +147,12 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
                 let glitchX = x
                 let glitchY = y
 
-                glitchY += Math.floor(Math.random()*(tileSize*2/2))
-                glitchY -= Math.floor(Math.random()*(tileSize*2/2))
-                glitchX += Math.floor(Math.random()*(tileSize*2/2))
-                glitchX -= Math.floor(Math.random()*(tileSize*2/2))
+                glitchY += Math.floor(Math.random()*(tileSize/2))
+                glitchY -= Math.floor(Math.random()*(tileSize/2))
+                glitchX += Math.floor(Math.random()*(tileSize/2))
+                glitchX -= Math.floor(Math.random()*(tileSize/2))
 
-                ctx.drawImage(glitchImage, glitchX, glitchY, tileSize*(Math.random()+0.8), tileSize*(Math.random()+0.8));
+                ctx.drawImage(glitchImage, glitchX, glitchY, tileSize*(Math.random()+0.6), tileSize*(Math.random()+0.6));
             }
 
             if (game.state.morePoints.points && game.state.morePoints.lineX == lineX && game.state.morePoints.lineY == lineY) {
