@@ -22,13 +22,7 @@ module.exports = async (canvas, game, Listener) => {
             if (ghost.placeOfDeath.y < 10*tileSize) ghost.placeOfDeath.y += tileSize/10
             if (ghost.placeOfDeath.y > 10*tileSize) ghost.placeOfDeath.y -= tileSize/10
 
-            let eyesImage = ghost.images.eyes
-            if (!eyesImage) {
-                eyesImage = new Image();
-                eyesImage.src = `/images/ghosts/${ghost.color}/ghost-eyes.png`;
-                ghost.images.eyes = eyesImage
-            }
-            ctx.drawImage(eyesImage, ghost.placeOfDeath.x, ghost.placeOfDeath.y, tileSize, tileSize);
+            ctx.drawImage(game.state.images[`ghosts/${ghost.color}/ghost-eyes`], ghost.placeOfDeath.x, ghost.placeOfDeath.y, tileSize, tileSize);
         }
     }
 }

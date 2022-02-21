@@ -97,7 +97,7 @@ module.exports = (state, Listener, [ resetAll, gameOver ]) => {
 
     if (!gameOver) {
         state.song.pause()
-        state.song = new Audio('/songs/music1.mp3');
+        state.song = state.sounds['music1']
         state.song.loop = false
         state.song.volume = 1
         state.song.play()
@@ -107,7 +107,7 @@ module.exports = (state, Listener, [ resetAll, gameOver ]) => {
             state.gameStage = 'game'
             state.pauseMovement = false
 
-            state.song = new Audio('/songs/music2.mp3');
+            state.song = state.sounds['music2']
             state.song.loop = true
             state.song.volume = 0.3
             state.song.play()

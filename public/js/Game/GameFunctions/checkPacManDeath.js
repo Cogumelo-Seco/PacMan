@@ -48,11 +48,7 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
         setTimeout(() => state.pauseMovement = false, 1000)
         state.pacManKills += 1000
 
-        state.song.pause()
-        state.song = new Audio('/songs/deathGhost.mp3');
-        state.song.volume = 1
-        state.song.loop = false
-        state.song.play()        
+        state.playSong('deathGhost')      
 
         if (ghost) {
             ghost.death = true
@@ -65,19 +61,11 @@ module.exports = (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
         if (state.playeMusic2Timeout) clearTimeout(state.playeMusic2Timeout)
         state.playeMusic2Timeout = setTimeout(() => {
             if (state.gameStage == 'game') {
-                state.song.pause()
-                state.song = new Audio('/songs/music2.mp3');
-                state.song.volume = 0.3
-                state.song.loop = true
-                state.song.play()
+                state.playSong('music2', { loop: true, volume: 0.3 })
             }
         }, 5000)
     } else {
-        state.song.pause()
-        state.song = new Audio('/songs/death.mp3');
-        state.song.volume = 1
-        state.song.loop = false
-        state.song.play()
+        state.playSong('death')
 
         state.pacMan.animate = false
         state.lifes -= 1

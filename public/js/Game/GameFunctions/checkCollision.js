@@ -4,8 +4,7 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
     
     if (type == 0) {
         addPoints(10)
-        state.songEffect = new Audio('/songs/coin.mp3');
-        state.songEffect.play()
+        state.playSongEffect('coin')
     }
     if (type == 2) {
         addPoints(150)
@@ -15,11 +14,7 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
             state.ghosts[i].speed = 400
         }
 
-        state.song.pause()
-        state.song = new Audio('/songs/musicSpecial.mp3');
-        state.song.volume = 1
-        state.song.loop = false
-        state.song.play()
+        state.playSong('musicSpecial')
 
         let interval = setInterval(() => {
             if (state.pacManKills <= +new Date()) {
@@ -33,11 +28,7 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
                     }
                 }
 
-                state.song.pause()
-                state.song = new Audio('/songs/music2.mp3');
-                state.song.volume = 0.3
-                state.song.loop = true
-                state.song.play()
+                state.playSong('music2', { loop: true, volume: 0.3 })
             }
         }, 100)
     }

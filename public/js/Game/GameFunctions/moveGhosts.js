@@ -2,17 +2,6 @@ module.exports = (state, checkPacManDeath) => {
     let blockedPlaces = state.ghosts.map(g => g.id)
     blockedPlaces.push(1)
 
-    function newDirection(blockedDirection) {
-        let directions = []
-
-        if (!blockedPlaces.includes(state.map[lineY-1] ? state.map[lineY-1][lineX] : null) && blockedDirection != 'up') directions.push('up')
-        if (!blockedPlaces.includes(state.map[lineY+1] ? state.map[lineY+1][lineX] : null) && blockedDirection != 'down') directions.push('down')
-        if (!blockedPlaces.includes(state.map[lineY] ? state.map[lineY][lineX-1] : null) && blockedDirection != 'left') directions.push('left')
-        if (!blockedPlaces.includes(state.map[lineY] ? state.map[lineY][lineX+1] : null) && blockedDirection != 'right') directions.push('right')
-
-        return directions[Math.floor(Math.random() * directions.length)]
-    }
-
     function regenerateGhost(i, ghostId) {        
         state.ghosts[i].oldTile = 3
         if (state.ghosts[i].death) return
@@ -42,6 +31,17 @@ module.exports = (state, checkPacManDeath) => {
         let ghostId = state.ghosts[i].id
         let lineX = null
         let lineY = null
+
+        function newDirection(blockedDirection) {
+            let directions = []
+    
+            if (!blockedPlaces.includes(state.map[lineY-1] ? state.map[lineY-1][lineX] : null) && blockedDirection != 'up') directions.push('up')
+            if (!blockedPlaces.includes(state.map[lineY+1] ? state.map[lineY+1][lineX] : null) && blockedDirection != 'down') directions.push('down')
+            if (!blockedPlaces.includes(state.map[lineY] ? state.map[lineY][lineX-1] : null) && blockedDirection != 'left') directions.push('left')
+            if (!blockedPlaces.includes(state.map[lineY] ? state.map[lineY][lineX+1] : null) && blockedDirection != 'right') directions.push('right')
+    
+            return directions[Math.floor(Math.random() * directions.length)]
+        }
 
         if (state.ghosts[i].speedCounter <= +new Date()) {
             state.ghosts[i].speedCounter = +new Date()+state.ghosts[i].speed

@@ -25,6 +25,12 @@ div#codeMessage {
     animation: codeMessage 0.3s linear;
 }
 
+div#fpsDisplay {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
 div#game {
     position: absolute;
     left: 50%;

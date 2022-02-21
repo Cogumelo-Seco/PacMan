@@ -1,6 +1,6 @@
 function createGame(Listener) {
     const state = {
-        mapColor: 300,
+        fps: '0-0',
         lifes: 2,
         highScore: 0,
         score: 0,
@@ -10,7 +10,8 @@ function createGame(Listener) {
         gameGlitchedStage: 1,
         pauseMovement: true,
         darkTheme: true,
-        images: {},
+        images: [],
+        sounds: [],
         canvas: {
             width: 1050,
             height: 1100,
@@ -65,7 +66,6 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                images: {},
                 defaultSpeed: 170,
                 speed: 175,
                 speedCounter: 0,
@@ -84,7 +84,6 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                images: {},
                 defaultSpeed: 180,
                 speed: 180,
                 speedCounter: 0,
@@ -103,7 +102,6 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                images: {},
                 defaultSpeed: 185,
                 speed: 185,
                 speedCounter: 0,
@@ -122,7 +120,6 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                images: {},
                 defaultSpeed: 180,
                 speed: 180,
                 speedCounter: 0,
@@ -134,29 +131,6 @@ function createGame(Listener) {
             }
         ],
         map: [
-            /*[ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,6 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,7 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-            [ 9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],*/
-            
             [ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 ],
             [ 1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1 ],
             [ 1,2,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,2,1 ],
@@ -182,6 +156,14 @@ function createGame(Listener) {
         ]
     }
 
+    const addImages = (command) => require('./GameFunctions/addImages')(state)
+    const addSounds = (command) => require('./GameFunctions/addSounds')(state)
+
+    const playSongEffect = (type, command) => require('./GameFunctions/playSongEffect')(type, command, state)
+    const playSong = (type, command) => require('./GameFunctions/playSong')(type, command, state)
+    state.playSongEffect = playSongEffect
+    state.playSong = playSong
+
     const addGhost = (command) => require('./GameFunctions/addGhost')(state, Listener, command)
     const resetGame = (command) => require('./GameFunctions/resetGame')(state, Listener, command)
     const checkPacManDeath = (command) => require('./GameFunctions/checkPacManDeath')(state, addPoints, resetGame, command)
@@ -190,15 +172,14 @@ function createGame(Listener) {
     const checkCollision = (command) => require('./GameFunctions/checkCollision')(state, checkPacManDeath, addPoints, command)
     const codes = require('./GameFunctions/codes')(state, checkPacManDeath, addGhost)
 
-    function start(command) {
+    async function start(command) {
+        await loading()
+
         if (command.startGame) {
             state.gameStage = 'game'
             state.pauseMovement = false
 
-            state.song = new Audio('/songs/music2.mp3');
-            state.song.loop = true
-            state.song.volume = 0.3
-            state.song.play()
+            playSong('music2', { loop: true, volume: 0.3 })
         }
 
         if (state.gameInterval) clearInterval(state.gameInterval)
@@ -279,6 +260,22 @@ function createGame(Listener) {
         }, 1)
     }
 
+    async function loading() {
+        await addImages()
+        await addSounds()
+
+        for (let i of state.images) {
+            let img = new Image()
+            img.src = `/images/${i}.png`
+            state.images[i] = img
+        }
+
+        for (let i of state.sounds) {
+            let sound = new Audio(`/sounds/${i}.mp3`)
+            state.sounds[i] = sound
+        }
+    }
+
     function addPoints(points) {
         let maxScore = 1000000000000000
         if (state.score < maxScore) state.score += points
@@ -290,6 +287,8 @@ function createGame(Listener) {
     return {
         start,
 		movePacMan,
+        playSongEffect,
+        playSong,
         state
     }
 }

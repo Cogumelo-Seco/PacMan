@@ -38,6 +38,7 @@ module.exports = function renderGame(canvas, game, Listener) {
         require('./RenderTexts')(canvas, game, Listener)
         require('./RenderHUD')(canvas, game, Listener)
     }
+    require('./RenderInformationTexts')(canvas, game, Listener)
 
     let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
 

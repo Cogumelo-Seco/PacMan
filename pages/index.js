@@ -21,8 +21,7 @@ const Game = (props) => {
                 a.layerX > -50 && a.layerX < 50 && a.layerY > 188 && a.layerY < 200 && game.state.gameStage == 'home' && window.innerWidth <= 750
             ) {
                 game.state.gameStage = 'initial'
-                game.state.song = new Audio('/songs/music1.mp3');
-                game.state.song.play()
+                game.playSong('music1')
 
                 document.getElementById('score').style.display = 'block'
                 document.getElementById('highScoreTitle').style.display = 'block'
@@ -56,6 +55,7 @@ const Game = (props) => {
 
                 <section id="section">
                     <div id="codeMessage" />
+                    <div id="fpsDisplay">?FPS</div>
                     
                     <div id="game">
                         <ul id="gameHUD">

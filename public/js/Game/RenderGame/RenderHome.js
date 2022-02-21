@@ -14,26 +14,25 @@ module.exports = async (canvas, game, Listener) => {
     ctx.fillStyle = game.state.darkTheme ? 'white' : 'black'
     ctx.fillText('START GAME', canvas.width/2-(ctx.measureText('START GAME').width/2), canvas.height/1.5);
 
-    let pacManImage = new Image();
     let pacManImageStage = 'closed'
     if (game.state.animations.pacMan.dalay <= +new Date()) {
         pacManImageStage = 'semiOpen'
         if (game.state.animations.pacMan.dalay+game.state.animations.pacMan.totalDalay/2 <= +new Date()) pacManImageStage = 'open'
         if (game.state.animations.pacMan.dalay+game.state.animations.pacMan.totalDalay <= +new Date()) game.state.animations.pacMan.dalay = +new Date()+game.state.animations.pacMan.totalDalay
     }
-    pacManImage.src = `/images/pac-man-${pacManImageStage}.png`;
+    let pacManImage = game.state.images[`pac-man-${pacManImageStage}`]
 
     let menuAnimationX = game.state.animations.menuAnimation.menuAnimationX-(tileSize*2)
     let ghostsAnimation = game.state.animations.menuGhosts.ghostsAnimation
 
-    ctx.drawImage(pacManImage, menuAnimationX, game.state.gameGlitched ? canvas.height*Math.random()*0.1+canvas.height/3 : canvas.height/2.5, tileSize, tileSize);
+    if (pacManImage) ctx.drawImage(pacManImage, menuAnimationX, game.state.gameGlitched ? canvas.height*Math.random()*0.1+canvas.height/3 : canvas.height/2.5, tileSize, tileSize);
     menuAnimationX -= tileSize*2-tileSize/2
 
     for (let ghost of game.state.ghosts) {
-        let ghostImage = new Image();
-        if (ghost.scared) ghostImage.src = `/images/ghosts/${ghost.color}/scared/scared-ghost-1.png`
-        else ghostImage.src = `/images/ghosts/${ghost.color}/ghost-right-${ghost.activeAnimation ? ghostsAnimation ? 1 : 2 : 1}.png`
-        ctx.drawImage(ghostImage, menuAnimationX, game.state.gameGlitched ? canvas.height*Math.random()*0.1+canvas.height/3 : canvas.height/2.5, tileSize, tileSize);
+        let ghostImage = game.state.images[`ghosts/${ghost.color}/ghost-right-${ghost.activeAnimation ? ghostsAnimation ? 1 : 2 : 1}`]
+        if (ghost.scared) ghostImage = game.state.images[`ghosts/${ghost.color}/scared/scared-ghost-1`]
+
+        if (ghostImage) ctx.drawImage(ghostImage, menuAnimationX, game.state.gameGlitched ? canvas.height*Math.random()*0.1+canvas.height/3 : canvas.height/2.5, tileSize, tileSize);
         menuAnimationX -= game.state.gameGlitched ? tileSize*Math.random()*2 : tileSize
     }
 

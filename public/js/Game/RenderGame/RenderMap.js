@@ -49,20 +49,8 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
             } else if (ghostsIds.includes(column)) {
                 let ghost = game.state.ghosts.find(g => g.id == column)
 
-                let ghostImage = ghost.images[ghost.color+ghost.animDirection+(ghost.activeAnimation ? ghost.animation ? 2 : 1 : 1)]
-                if (ghost.scared) ghostImage = ghost.images[ghost.color+(game.state.pacManKills-1800 <= +new Date() ? ghost.animation ? 1 : 2 : 1)]
-
-                if (!ghostImage) {
-                    if (ghost.scared) {
-                        ghostImage = new Image();
-                        ghostImage.src = `/images/ghosts/${ghost.color}/scared/scared-ghost-${game.state.pacManKills-1800 <= +new Date() ? ghost.animation ? 1 : 2 : 1}.png`;
-                        ghost.images[ghost.color+(game.state.pacManKills-1800 <= +new Date() ? ghost.animation ? 1 : 2 : 1)] = ghostImage
-                    } else {
-                        ghostImage = new Image();
-                        ghostImage.src = `/images/ghosts/${ghost.color}/ghost-${ghost.animDirection}-${ghost.activeAnimation ? ghost.animation ? 2 : 1 : 1}.png`;
-                        ghost.images[ghost.color+ghost.animDirection+(ghost.activeAnimation ? ghost.animation ? 2 : 1 : 1)] = ghostImage
-                    }
-                }
+                let ghostImage = game.state.images[`ghosts/${ghost.color}/ghost-${ghost.animDirection}-${ghost.activeAnimation ? ghost.animation ? 2 : 1 : 1}`]
+                if (ghost.scared) ghostImage = game.state.images[`ghosts/${ghost.color}/scared/scared-ghost-${game.state.pacManKills-1800 <= +new Date() ? ghost.animation ? 1 : 2 : 1}`]
 
                 let ghostY = y
                 let ghostX = x
@@ -89,16 +77,15 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
                     ghostX -= Math.floor(Math.random()*10)
                 }
 
-                ctx.drawImage(ghostImage, ghostX, ghostY, tileSize, tileSize);
+                if (ghostImage) ctx.drawImage(ghostImage, ghostX, ghostY, tileSize, tileSize);
             } else if (column == 9) {
-                let pacManImage = new Image();
                 let pacManImageStage = 'closed'
                 if (game.state.animations.pacMan.dalay <= +new Date() && game.state.pacMan.animate && !game.state.pauseMovement && game.state.gameStage != 'pause') {
                     pacManImageStage = 'semiOpen'
                     if (game.state.animations.pacMan.dalay+game.state.animations.pacMan.totalDalay/2 <= +new Date()) pacManImageStage = 'open'
                     if (game.state.animations.pacMan.dalay+game.state.animations.pacMan.totalDalay <= +new Date()) game.state.animations.pacMan.dalay = +new Date()+game.state.animations.pacMan.totalDalay
                 }
-                pacManImage.src = `/images/pac-man-${pacManImageStage}.png`;
+                let pacManImage = game.state.images[`pac-man-${pacManImageStage}`]
                 let rotate = 0
                 let pacManX = x
                 let pacManY = y
@@ -134,16 +121,11 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
 
                 ctx.setTransform(1, 0, 0, 1, pacManX+(tileSize/2), pacManY+(tileSize/2));
                 ctx.rotate(rotate*Math.PI/180);
-                ctx.drawImage(pacManImage, -tileSize/2, -tileSize/2, tileSize, tileSize);
+                if (pacManImage) ctx.drawImage(pacManImage, -tileSize/2, -tileSize/2, tileSize, tileSize);
 
                 ctx.restore()
             } else {
-                let glitchImage = game.state.images.glitchImage
-                if (!glitchImage) {
-                    glitchImage = new Image()
-                    glitchImage.src = '/images/glitch.png'
-                    game.state.images.glitchImage = glitchImage
-                }
+                let glitchImage = game.state.images['glitch']
                 let glitchX = x
                 let glitchY = y
 
@@ -152,7 +134,7 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
                 glitchX += Math.floor(Math.random()*(tileSize/2))
                 glitchX -= Math.floor(Math.random()*(tileSize/2))
 
-                ctx.drawImage(glitchImage, glitchX, glitchY, tileSize*(Math.random()+0.6), tileSize*(Math.random()+0.6));
+                if (glitchImage) ctx.drawImage(glitchImage, glitchX, glitchY, tileSize*(Math.random()+0.6), tileSize*(Math.random()+0.6));
             }
 
             if (game.state.morePoints.points && game.state.morePoints.lineX == lineX && game.state.morePoints.lineY == lineY) {
