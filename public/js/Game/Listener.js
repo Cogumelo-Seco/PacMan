@@ -8,14 +8,6 @@ export default function createListener() {
         codeText: ''
     }
 
-    const subscribe = (observerFunction) => state.observers.push(observerFunction)
-
-    const notifyAll = (command) => {
-        for (const observerFunction of state.observers) {
-            observerFunction(command)
-        }
-    }
-
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) state.mobile = true
 
     document.addEventListener('keydown', handleKeys)
@@ -56,8 +48,6 @@ export default function createListener() {
     }
 
     return {
-        subscribe,
-        notifyAll,
         state
     }
 }
