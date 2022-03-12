@@ -21,7 +21,7 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
                 ctx.fill();
             } else if (column == 1) {
                 let wallLineSize = game.state.gameGlitched ? Math.floor(Math.random()*10) : 6
-                let wallColor = game.state.gameGlitched && glitchedPercent > 80 ? glitchedColor() : '#141484'
+                let wallColor = game.state.gameGlitched && glitchedPercent > 80 ? glitchedColor() : game.state.rainbowMode ? `hsl(${game.state.rainbowColor}, 100%, 40%)` : '#141484'
 
                 if (game.state.gameStage == 'levelWon') {
                     if (game.state.animations.walls.dalay <= +new Date()) {

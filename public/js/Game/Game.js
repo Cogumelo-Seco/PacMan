@@ -10,6 +10,8 @@ function createGame(Listener) {
         gameGlitchedStage: 1,
         pauseMovement: true,
         darkTheme: true,
+        rainbowMode: false,
+        rainbowColor: 0,
         images: [],
         sounds: [],
         canvas: {
@@ -257,7 +259,9 @@ function createGame(Listener) {
                     state.gameGlitchedStage += 0.15
                 }
             }
-        }, 1)
+
+            state.rainbowColor = state.rainbowColor >= 360 ? 0 : state.rainbowColor+1
+        }, 17)
     }
 
     async function loading() {
