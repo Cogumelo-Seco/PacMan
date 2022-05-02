@@ -12,6 +12,7 @@ function createGame(Listener) {
         darkTheme: true,
         rainbowMode: false,
         rainbowColor: 0,
+        lowMode: false,
         images: [],
         sounds: [],
         canvas: {

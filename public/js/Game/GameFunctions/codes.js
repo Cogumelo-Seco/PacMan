@@ -81,6 +81,10 @@ module.exports = function codesFunction(state, checkPacManDeath, addGhost) {
             state.rainbowMode = state.rainbowMode ? false : true
             return state.rainbowMode ? true : false
         },
+        lowmode: function () {
+            state.lowMode = state.lowMode ? false : true
+            return state.lowMode ? true : false
+        },
         codes: function () {
             let codesText = ''
             let codesList = codesFunction()

@@ -22,7 +22,9 @@ module.exports = async (canvas, game, Listener) => {
             if (ghost.placeOfDeath.y < 10*tileSize) ghost.placeOfDeath.y += tileSize/10
             if (ghost.placeOfDeath.y > 10*tileSize) ghost.placeOfDeath.y -= tileSize/10
 
-            ctx.drawImage(game.state.images[`ghosts/${ghost.color}/ghost-eyes`], ghost.placeOfDeath.x, ghost.placeOfDeath.y, tileSize, tileSize);
+            ctx.fillStyle = 'red'
+            if (game.state.lowMode) ctx.fillRect(ghost.placeOfDeath.x, ghost.placeOfDeath.y, tileSize, tileSize)
+            else ctx.drawImage(game.state.images[`ghosts/${ghost.color}/ghost-eyes`], ghost.placeOfDeath.x, ghost.placeOfDeath.y, tileSize, tileSize);
         }
     }
 }

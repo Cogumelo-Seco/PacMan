@@ -1,4 +1,4 @@
-module.exports = async (canvas, game, Listener, glitchedColor) => {
+module.exports = async (canvas, game, Listener, randomColor) => {
     const ctx = canvas.getContext('2d')
 
     let glitchedPercent = Math.floor(Math.random()*100)
@@ -14,14 +14,17 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
             lineY = Number(lineY)
             lineX = Number(lineX)
             if (column == 0) {
-                ctx.fillStyle = game.state.gameGlitched ? glitchedColor() : game.state.darkTheme ? '#ffb897' : 'rgb(50, 50, 50)'
+                ctx.fillStyle = game.state.gameGlitched || game.state.rainbowMode ? randomColor() : game.state.darkTheme ? '#ffb897' : 'rgb(50, 50, 50)'
 
-                ctx.beginPath();
-                ctx.arc(x+(tileSize/2), y+(tileSize/2), game.state.gameGlitched ? Math.floor(Math.random()*6) : 5, 0, 2 * Math.PI)
-                ctx.fill();
+                if (game.state.lowMode) ctx.fillRect(x+(tileSize*0.37), y+(tileSize*0.37), tileSize*0.25, tileSize*0.25)
+                else {
+                    ctx.beginPath();
+                    ctx.arc(x+(tileSize/2), y+(tileSize/2), game.state.gameGlitched ? Math.floor(Math.random()*6) : 5, 0, 2 * Math.PI)
+                    ctx.fill();
+                }
             } else if (column == 1) {
                 let wallLineSize = game.state.gameGlitched ? Math.floor(Math.random()*10) : 6
-                let wallColor = game.state.gameGlitched && glitchedPercent > 80 ? glitchedColor() : game.state.rainbowMode ? `hsl(${game.state.rainbowColor}, 100%, 40%)` : '#141484'
+                let wallColor = game.state.gameGlitched && glitchedPercent > 80 ? randomColor() : game.state.rainbowMode ? `hsl(${game.state.rainbowColor}, 100%, 40%)` : '#141484'
 
                 if (game.state.gameStage == 'levelWon') {
                     if (game.state.animations.walls.dalay <= +new Date()) {
@@ -30,19 +33,25 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
                     } else ctx.fillStyle = wallColor
                 } else ctx.fillStyle = wallColor
 
-                if (map[lineY][lineX-1] != 1) ctx.fillRect(x, y, wallLineSize, tileSize)
-                if (map[lineY][lineX+1] != 1) ctx.fillRect(x+tileSize-wallLineSize, y, wallLineSize, tileSize)
-                if (!map[lineY-1] || map[lineY-1][lineX] != 1) ctx.fillRect(x, y, tileSize, wallLineSize)
-                if (!map[lineY+1] || map[lineY+1][lineX] != 1) ctx.fillRect(x, y+tileSize-wallLineSize, tileSize, wallLineSize)
+                if (game.state.lowMode) ctx.fillRect(x, y, tileSize, tileSize)
+                else {
+                    if (map[lineY][lineX-1] != 1) ctx.fillRect(x, y, wallLineSize, tileSize)
+                    if (map[lineY][lineX+1] != 1) ctx.fillRect(x+tileSize-wallLineSize, y, wallLineSize, tileSize)
+                    if (!map[lineY-1] || map[lineY-1][lineX] != 1) ctx.fillRect(x, y, tileSize, wallLineSize)
+                    if (!map[lineY+1] || map[lineY+1][lineX] != 1) ctx.fillRect(x, y+tileSize-wallLineSize, tileSize, wallLineSize)
+                }
             } else if (column == 2) {
                 if (game.state.animations.specialDots.dalay <= +new Date() && game.state.gameStage != 'pause') {
                     ctx.fillStyle = 'transparent'
                     if (game.state.animations.specialDots.dalay+game.state.animations.specialDots.totalDalay <= +new Date()) game.state.animations.specialDots.dalay = +new Date()+game.state.animations.specialDots.totalDalay
-                } else ctx.fillStyle = game.state.gameGlitched ? glitchedColor() : game.state.darkTheme ? '#ffb897' : 'rgb(50, 50, 50)'
+                } else ctx.fillStyle = game.state.gameGlitched || game.state.rainbowMode ? randomColor() : game.state.darkTheme ? '#ffb897' : 'rgb(50, 50, 50)'
 
-                ctx.beginPath();
-                ctx.arc(x+(tileSize/2), y+(tileSize/2), game.state.gameGlitched ? Math.floor(Math.random()*10+5) : 15, 0, 2 * Math.PI)
-                ctx.fill();
+                if (game.state.lowMode) ctx.fillRect(x+(tileSize*0.25), y+(tileSize*0.25), tileSize*0.50, tileSize*0.50)
+                else {
+                    ctx.beginPath();
+                    ctx.arc(x+(tileSize/2), y+(tileSize/2), game.state.gameGlitched ? Math.floor(Math.random()*10+5) : 15, 0, 2 * Math.PI)
+                    ctx.fill();
+                }
             } else if (column == 3) {
                 ctx.fillStyle = 'transparent'
                 ctx.fillRect(x, y, tileSize, tileSize)
@@ -77,7 +86,10 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
                     ghostX -= Math.floor(Math.random()*10)
                 }
 
-                if (ghostImage) ctx.drawImage(ghostImage, ghostX, ghostY, tileSize, tileSize);
+                ctx.fillStyle = 'purple'
+                ctx.fillStyle = ghost.scared ? game.state.pacManKills-1800 <= +new Date() ? ghost.animation ? 'blue' : 'cyan' : 'blue' : ghost.color
+                if (game.state.lowMode) ctx.fillRect(x, y, tileSize, tileSize)
+                else if (ghostImage) ctx.drawImage(ghostImage, ghostX, ghostY, tileSize, tileSize);
             } else if (column == 9) {
                 let pacManImageStage = 'closed'
                 if (game.state.animations.pacMan.dalay <= +new Date() && game.state.pacMan.animate && !game.state.pauseMovement && game.state.gameStage != 'pause') {
@@ -117,15 +129,19 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
                     pacManX -= Math.floor(Math.random()*10)
                 }
 
-                ctx.save()
+                ctx.fillStyle = 'yellow'
+                if (game.state.lowMode) ctx.fillRect(x, y, tileSize, tileSize)
+                else {
+                    ctx.save()
 
-                ctx.setTransform(1, 0, 0, 1, pacManX+(tileSize/2), pacManY+(tileSize/2));
-                ctx.rotate(rotate*Math.PI/180);
-                if (pacManImage) ctx.drawImage(pacManImage, -tileSize/2, -tileSize/2, tileSize, tileSize);
+                    ctx.setTransform(1, 0, 0, 1, pacManX+(tileSize/2), pacManY+(tileSize/2));
+                    ctx.rotate(rotate*Math.PI/180);
+                    if (pacManImage) ctx.drawImage(pacManImage, -tileSize/2, -tileSize/2, tileSize, tileSize);
 
-                ctx.restore()
+                    ctx.restore()
+                }
             } else {
-                let glitchImage = game.state.images['glitch']
+                /*let glitchImage = game.state.images['glitch']
                 let glitchX = x
                 let glitchY = y
 
@@ -134,7 +150,9 @@ module.exports = async (canvas, game, Listener, glitchedColor) => {
                 glitchX += Math.floor(Math.random()*(tileSize/2))
                 glitchX -= Math.floor(Math.random()*(tileSize/2))
 
-                if (glitchImage) ctx.drawImage(glitchImage, glitchX, glitchY, tileSize*(Math.random()+0.6), tileSize*(Math.random()+0.6));
+                if (glitchImage) ctx.drawImage(glitchImage, glitchX, glitchY, tileSize*(Math.random()+0.6), tileSize*(Math.random()+0.6));*/
+                ctx.fillStyle = randomColor()
+                ctx.fillRect(x, y, tileSize, tileSize)
             }
 
             if (game.state.morePoints.points && game.state.morePoints.lineX == lineX && game.state.morePoints.lineY == lineY) {
