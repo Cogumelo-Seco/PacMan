@@ -13,12 +13,12 @@ const Game = (props) => {
         const Listener = createListener();
         const game = createGame(Listener);
 
-        game.start({ Listener })
+        game.loading({ Listener })
 
         canvas.addEventListener('click', (a) => {
             if (
-                a.layerX > -84 && a.layerX < 84 && a.layerY > 25 && a.layerY < 45 && game.state.gameStage == 'home' && window.innerWidth >= 750 ||
-                a.layerX > -50 && a.layerX < 50 && a.layerY > 188 && a.layerY < 200 && game.state.gameStage == 'home' && window.innerWidth <= 750
+                a.layerX > -84 && a.layerX < 84 && a.layerY > 25 && a.layerY < 45 && game.state.gameStage == 'home' && window.innerWidth >= 750 && game.state.loading.loaded >= game.state.loading.total||
+                a.layerX > -50 && a.layerX < 50 && a.layerY > 188 && a.layerY < 200 && game.state.gameStage == 'home' && window.innerWidth <= 750 && game.state.loading.loaded >= game.state.loading.total
             ) {
                 game.state.gameStage = 'initial'
                 game.playSong('music1')
@@ -76,6 +76,8 @@ const Game = (props) => {
                         <button className="mobileButtons" id="mobileButtonDown" />
                         <button className="mobileButtons" id="mobileButtonRight" />
                     </div>
+
+                    <div id="loadingMsg">Loading...</div>
                 </section>
                 
             </body>

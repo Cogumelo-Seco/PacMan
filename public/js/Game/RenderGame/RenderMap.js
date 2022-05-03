@@ -141,18 +141,11 @@ module.exports = async (canvas, game, Listener, randomColor) => {
                     ctx.restore()
                 }
             } else {
-                /*let glitchImage = game.state.images['glitch']
-                let glitchX = x
-                let glitchY = y
+                let image = game.state.images[game.state.images[Math.floor(Math.random()*game.state.images.length)]]
 
-                glitchY += Math.floor(Math.random()*(tileSize/2))
-                glitchY -= Math.floor(Math.random()*(tileSize/2))
-                glitchX += Math.floor(Math.random()*(tileSize/2))
-                glitchX -= Math.floor(Math.random()*(tileSize/2))
-
-                if (glitchImage) ctx.drawImage(glitchImage, glitchX, glitchY, tileSize*(Math.random()+0.6), tileSize*(Math.random()+0.6));*/
                 ctx.fillStyle = randomColor()
                 ctx.fillRect(x, y, tileSize, tileSize)
+                if (image && !game.state.lowMode) ctx.drawImage(image, x, y, tileSize, tileSize);
             }
 
             if (game.state.morePoints.points && game.state.morePoints.lineX == lineX && game.state.morePoints.lineY == lineY) {

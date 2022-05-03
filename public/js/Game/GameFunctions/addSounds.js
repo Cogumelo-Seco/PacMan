@@ -7,4 +7,6 @@ module.exports = async (state) => {
         'music2',
         'musicSpecial',
     ]
+
+    return state.sounds.length
 }

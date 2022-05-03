@@ -11,7 +11,7 @@ module.exports = async (canvas, game, Listener) => {
     ctx.fillText('PAC MAN', canvas.width/2-(ctx.measureText('PAC MAN').width/2), 150);
 
     ctx.font = 'bold 50px game'
-    ctx.fillStyle = game.state.rainbowMode ? `hsl(${game.state.rainbowColor}, 100%, 40%)` : game.state.darkTheme ? 'white' : 'black'
+    ctx.fillStyle = game.state.loading.loaded >= game.state.loading.total ? game.state.rainbowMode ? `hsl(${game.state.rainbowColor}, 100%, 40%)` : game.state.darkTheme ? 'white' : 'black' : 'red'
     ctx.fillText('START GAME', canvas.width/2-(ctx.measureText('START GAME').width/2), canvas.height/1.5);
 
     let pacManImageStage = 'closed'

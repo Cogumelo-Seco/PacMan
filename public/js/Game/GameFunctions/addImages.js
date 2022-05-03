@@ -1,7 +1,5 @@
 module.exports = async (state) => {
     state.images = [
-        'glitch',
-        
         'pac-man-open',
         'pac-man-semiOpen',
         'pac-man-closed',
@@ -82,4 +80,6 @@ module.exports = async (state) => {
         'ghosts/red/scared/scared-ghost-1',
         'ghosts/red/scared/scared-ghost-2',
     ]
+    
+    return state.images.length
 }

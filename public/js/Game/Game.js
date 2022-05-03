@@ -15,6 +15,10 @@ function createGame(Listener) {
         lowMode: false,
         images: [],
         sounds: [],
+        loading: {
+            loaded: 0,
+            total: 0
+        },
         canvas: {
             width: 1050,
             height: 1100,
@@ -176,8 +180,6 @@ function createGame(Listener) {
     const codes = require('./GameFunctions/codes')(state, checkPacManDeath, addGhost)
 
     async function start(command) {
-        await loading()
-
         if (command.startGame) {
             state.gameStage = 'game'
             state.pauseMovement = false
@@ -265,20 +267,39 @@ function createGame(Listener) {
         }, 17)
     }
 
-    async function loading() {
-        await addImages()
-        await addSounds()
+    async function loading(command) {
+        state.loading.total += await addImages()
+        state.loading.total += await addSounds()
+
+        const loadingMsg = document.getElementById('loadingMsg')
+
+        const newLoad = (msg) => {
+            state.loading.loaded += 1
+            loadingMsg.innerText = `(${state.loading.loaded}/${state.loading.total}) ${Number.parseInt(state.loading.loaded/state.loading.total*100)}% - ${msg}`
+        }
 
         for (let i of state.images) {
             let img = new Image()
             img.src = `/images/${i}.png`
             state.images[i] = img
+            img.addEventListener('load', (e) => newLoad(e.path[0].src.split('/')[e.path[0].src.split('/').length-1]))
         }
 
         for (let i of state.sounds) {
-            let sound = new Audio(`/sounds/${i}.mp3`)
+            let sound = new Audio()
+            sound.src = `/sounds/${i}.mp3`
             state.sounds[i] = sound
+
+            sound.addEventListener('loadeddata', (e) => newLoad(e.path[0].src.split('/')[e.path[0].src.split('/').length-1]))
         }
+
+        let interval = setInterval(() => {
+            if (state.loading.loaded >= state.loading.total) {
+                loadingMsg.innerText = `(${state.loading.loaded}/${state.loading.total}) 100% - Complete loading`
+                clearInterval(interval)
+                setTimeout(() => loadingMsg.style.display = 'none', 2000)
+            }
+        }, 10)
     }
 
     function addPoints(points) {
@@ -291,6 +312,7 @@ function createGame(Listener) {
     
     return {
         start,
+        loading,
 		movePacMan,
         playSongEffect,
         playSong,
