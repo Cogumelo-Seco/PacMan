@@ -272,6 +272,11 @@ function createGame(Listener) {
         state.loading.total += await addImages()
         state.loading.total += await addSounds()
 
+        /*state.loading.total = 50
+        let interval = setInterval(() => {
+            if (state.loading.loaded < state.loading.total) state.loading.loaded += 1
+        }, 100)*/
+
         const newLoad = (msg) => {
             state.loading.loaded += 1
             state.loading.msg = `(${state.loading.loaded}/${state.loading.total}) - ${msg}`
