@@ -4,7 +4,7 @@ function createGame(Listener) {
         lifes: 2,
         highScore: 0,
         score: 0,
-        gameStage: 'home',
+        gameStage: 'loading',
         pacManKills: 0,
         gameGlitched: false,
         gameGlitchedStage: 1,
@@ -17,7 +17,8 @@ function createGame(Listener) {
         sounds: [],
         loading: {
             loaded: 0,
-            total: 0
+            total: 0,
+            msg: 'Loading...'
         },
         canvas: {
             width: 1050,
@@ -271,11 +272,9 @@ function createGame(Listener) {
         state.loading.total += await addImages()
         state.loading.total += await addSounds()
 
-        const loadingMsg = document.getElementById('loadingMsg')
-
         const newLoad = (msg) => {
             state.loading.loaded += 1
-            loadingMsg.innerText = `(${state.loading.loaded}/${state.loading.total}) ${Number.parseInt(state.loading.loaded/state.loading.total*100)}% - ${msg}`
+            state.loading.msg = `(${state.loading.loaded}/${state.loading.total}) - ${msg}`
         }
 
         for (let i of state.images) {
@@ -295,9 +294,9 @@ function createGame(Listener) {
 
         let interval = setInterval(() => {
             if (state.loading.loaded >= state.loading.total) {
-                loadingMsg.innerText = `(${state.loading.loaded}/${state.loading.total}) 100% - Complete loading`
+                state.loading.msg = `(${state.loading.loaded}/${state.loading.total}) 100% - Complete loading`
                 clearInterval(interval)
-                setTimeout(() => loadingMsg.style.display = 'none', 2000)
+                setTimeout(() => state.gameStage = 'home', 1000)
             }
         }, 10)
     }

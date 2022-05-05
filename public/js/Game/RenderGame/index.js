@@ -21,6 +21,8 @@ module.exports = function renderGame(canvas, game, Listener) {
 
     if (game.state.gameStage == 'home') {
         require('./RenderHome')(canvas, game, Listener)
+    } else if (game.state.gameStage == 'loading') {
+        require('./RenderLoading')(canvas, game, Listener)
     } else {
         require('./RenderMap')(canvas, game, Listener, randomColor)
         require('./RenderGhostDeath')(canvas, game, Listener)

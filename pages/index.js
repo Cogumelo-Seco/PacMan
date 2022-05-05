@@ -76,8 +76,6 @@ const Game = (props) => {
                         <button className="mobileButtons" id="mobileButtonDown" />
                         <button className="mobileButtons" id="mobileButtonRight" />
                     </div>
-
-                    <div id="loadingMsg">Loading...</div>
                 </section>
                 
             </body>

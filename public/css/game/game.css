@@ -31,12 +31,6 @@ div#fpsDisplay {
     right: 5px;
 }
 
-div#loadingMsg {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-}
-
 div#game {
     position: absolute;
     left: 50%;
