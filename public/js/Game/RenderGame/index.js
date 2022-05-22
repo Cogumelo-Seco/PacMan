@@ -31,9 +31,11 @@ module.exports = function renderGame(canvas, game, Listener) {
     }
     require('./RenderInformationTexts')(canvas, game, Listener)
 
-    let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
+    /*let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
 
     rAF(() => {
         renderGame(canvas, game, Listener)
-    })
+    })*/
+
+    setTimeout(() => renderGame(canvas, game, Listener), 0)
 }

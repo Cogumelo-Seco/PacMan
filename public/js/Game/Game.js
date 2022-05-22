@@ -265,7 +265,7 @@ function createGame(Listener) {
             }
 
             state.rainbowColor = state.rainbowColor >= 360 ? 0 : state.rainbowColor+1
-        }, 17)
+        }, 1000/55)
     }
 
     async function loading(command) {
