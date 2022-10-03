@@ -1,4 +1,4 @@
-module.exports = async (canvas, game, Listener) => {
+export default async (canvas, game, Listener) => {
     const ctx = canvas.getContext('2d')
 
     let tileSize = 55    
@@ -20,7 +20,7 @@ module.exports = async (canvas, game, Listener) => {
         if (game.state.animations.pacMan.dalay+game.state.animations.pacMan.totalDalay/2 <= +new Date()) pacManImageStage = 'open'
         if (game.state.animations.pacMan.dalay+game.state.animations.pacMan.totalDalay <= +new Date()) game.state.animations.pacMan.dalay = +new Date()+game.state.animations.pacMan.totalDalay
     }
-    let pacManImage = game.state.images[`pac-man-${pacManImageStage}`]
+    let pacManImage = game.state.images[`pac-man-${pacManImageStage}.png`]
 
     let menuAnimationX = game.state.animations.menuAnimation.menuAnimationX-(tileSize*2)
     let ghostsAnimation = game.state.animations.menuGhosts.ghostsAnimation
@@ -31,8 +31,8 @@ module.exports = async (canvas, game, Listener) => {
     menuAnimationX -= tileSize*2-tileSize/2
 
     for (let ghost of game.state.ghosts) {
-        let ghostImage = game.state.images[`ghosts/${ghost.color}/ghost-right-${ghost.activeAnimation ? ghostsAnimation ? 1 : 2 : 1}`]
-        if (ghost.scared) ghostImage = game.state.images[`ghosts/${ghost.color}/scared/scared-ghost-1`]
+        let ghostImage = game.state.images[`ghosts/${ghost.color}/ghost-right-${ghost.activeAnimation ? ghostsAnimation ? 1 : 2 : 1}.png`]
+        if (ghost.scared) ghostImage = game.state.images[`ghosts/${ghost.color}/scared/scared-ghost-1.png`]
 
         ctx.fillStyle = 'purple'
         ctx.fillStyle = ghost.color

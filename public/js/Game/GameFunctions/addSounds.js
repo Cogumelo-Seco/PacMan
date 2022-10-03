@@ -1,11 +1,11 @@
-module.exports = async (state) => {
+export default async (state) => {
     state.sounds = [
-        'coin',
-        'death',
-        'deathGhost',
-        'music1',
-        'music2',
-        'musicSpecial',
+        'coin.mp3',
+        'death.mp3',
+        'deathGhost.mp3',
+        'music1.mp3',
+        'music2.mp3',
+        'musicSpecial.mp3',
     ]
 
     return state.sounds.length

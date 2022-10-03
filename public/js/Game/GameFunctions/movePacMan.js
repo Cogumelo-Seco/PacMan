@@ -1,4 +1,4 @@
-module.exports = (state, checkCollision, command) => {
+export default (state, checkCollision, command) => {
     let direction = command.direction
     let lineX = null
     let lineY = null

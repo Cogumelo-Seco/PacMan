@@ -1,4 +1,4 @@
-module.exports = async (canvas, game, Listener) => {
+export default async (canvas, game, Listener) => {
     const ctx = canvas.getContext('2d')
 
     let tileSize = game.state.canvas.tileSize
@@ -24,7 +24,7 @@ module.exports = async (canvas, game, Listener) => {
 
             ctx.fillStyle = 'red'
             if (game.state.lowMode) ctx.fillRect(ghost.placeOfDeath.x, ghost.placeOfDeath.y, tileSize, tileSize)
-            else ctx.drawImage(game.state.images[`ghosts/${ghost.color}/ghost-eyes`], ghost.placeOfDeath.x, ghost.placeOfDeath.y, tileSize, tileSize);
+            else ctx.drawImage(game.state.images[`ghosts/${ghost.color}/ghost-eyes.png`], ghost.placeOfDeath.x, ghost.placeOfDeath.y, tileSize, tileSize);
         }
     }
 }

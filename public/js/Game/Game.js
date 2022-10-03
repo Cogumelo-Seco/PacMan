@@ -164,28 +164,28 @@ function createGame(Listener) {
         ]
     }
 
-    const addImages = (command) => require('./GameFunctions/addImages')(state)
-    const addSounds = (command) => require('./GameFunctions/addSounds')(state)
+    const addImages = (command) => require('./GameFunctions/addImages').default(state)
+    const addSounds = (command) => require('./GameFunctions/addSounds').default(state)
 
-    const playSongEffect = (type, command) => require('./GameFunctions/playSongEffect')(type, command, state)
-    const playSong = (type, command) => require('./GameFunctions/playSong')(type, command, state)
+    const playSongEffect = (type, command) => require('./GameFunctions/playSongEffect').default(type, command, state)
+    const playSong = (type, command) => require('./GameFunctions/playSong').default(type, command, state)
     state.playSongEffect = playSongEffect
     state.playSong = playSong
 
-    const addGhost = (command) => require('./GameFunctions/addGhost')(state, Listener, command)
-    const resetGame = (command) => require('./GameFunctions/resetGame')(state, Listener, command)
-    const checkPacManDeath = (command) => require('./GameFunctions/checkPacManDeath')(state, addPoints, resetGame, command)
-    const movePacMan = (command) => require('./GameFunctions/movePacMan')(state, checkCollision, command)
-    const moveGhosts = () => require('./GameFunctions/moveGhosts')(state, checkPacManDeath)
-    const checkCollision = (command) => require('./GameFunctions/checkCollision')(state, checkPacManDeath, addPoints, command)
-    const codes = require('./GameFunctions/codes')(state, checkPacManDeath, addGhost)
+    const addGhost = (command) => require('./GameFunctions/addGhost').default(state, Listener, command)
+    const resetGame = (command) => require('./GameFunctions/resetGame').default(state, Listener, command)
+    const checkPacManDeath = (command) => require('./GameFunctions/checkPacManDeath').default(state, addPoints, resetGame, command)
+    const movePacMan = (command) => require('./GameFunctions/movePacMan').default(state, checkCollision, command)
+    const moveGhosts = () => require('./GameFunctions/moveGhosts').default(state, checkPacManDeath)
+    const checkCollision = (command) => require('./GameFunctions/checkCollision').default(state, checkPacManDeath, addPoints, command)
+    const codes = require('./GameFunctions/codes').default(state, checkPacManDeath, addGhost)
 
     async function start(command) {
         if (command.startGame) {
             state.gameStage = 'game'
             state.pauseMovement = false
 
-            playSong('music2', { loop: true, volume: 0.3 })
+            playSong('music2.mp3', { loop: true, volume: 0.3 })
         }
 
         if (state.gameInterval) clearInterval(state.gameInterval)
@@ -265,45 +265,65 @@ function createGame(Listener) {
             }
 
             state.rainbowColor = state.rainbowColor >= 360 ? 0 : state.rainbowColor+1
-        }, 1000/55)
+        }, 1000/40)
     }
 
     async function loading(command) {
-        state.loading.total += await addImages()
-        state.loading.total += await addSounds()
+        let loadingImagesTotal = await addImages()
+        let loadingSoundsTotal = await addSounds()
+        state.loading.total = loadingImagesTotal
+        state.loading.total += loadingSoundsTotal
 
-        /*state.loading.total = 50
-        let interval = setInterval(() => {
-            if (state.loading.loaded < state.loading.total) state.loading.loaded += 1
-        }, 100)*/
+        let toLoad = state.images.concat(state.sounds)
 
         const newLoad = (msg) => {
-            state.loading.loaded += 1
-            state.loading.msg = `(${state.loading.loaded}/${state.loading.total}) - ${msg}`
-        }
+            if (msg.includes('ERRO')) console.log(msg)
+            else {
+            
+                state.loading.loaded += 1
+                state.loading.msg = `(${state.loading.loaded}/${state.loading.total}) - ${msg}`
 
-        for (let i of state.images) {
-            let img = new Image()
-            img.src = `/images/${i}.png`
-            state.images[i] = img
-            img.addEventListener('load', (e) => newLoad(e.path[0].src.split('/')[e.path[0].src.split('/').length-1]))
-        }
-
-        for (let i of state.sounds) {
-            let sound = new Audio()
-            sound.src = `/sounds/${i}.mp3`
-            state.sounds[i] = sound
-
-            sound.addEventListener('loadeddata', (e) => newLoad(e.path[0].src.split('/')[e.path[0].src.split('/').length-1]))
-        }
-
-        let interval = setInterval(() => {
-            if (state.loading.loaded >= state.loading.total) {
-                state.loading.msg = `(${state.loading.loaded}/${state.loading.total}) 100% - Complete loading`
-                clearInterval(interval)
-                setTimeout(() => state.gameStage = 'home', 1000)
+                if (state.loading.loaded >= state.loading.total) completeLoading()
+                else load(toLoad[state.loading.loaded])
             }
-        }, 10)
+        }
+
+        const completeLoading = () => {
+            state.loading.msg = `(${state.loading.loaded}/${state.loading.total}) 100% - Complete loading`
+            setTimeout(() => state.gameStage = 'home', 1000)
+        }
+
+        const load = (dir) => {
+            console.log(dir)
+            let loaded = false
+
+            setTimeout(() => {
+                if (!loaded) newLoad('[ERROR File failed to load] '+dir)
+            }, 10000)
+
+            if ([ 'ogg', 'mp3' ].includes(dir.split('.')[dir.split('.').length-1])) {
+                let sound = new Audio()
+                sound.addEventListener('loadeddata', (e) => {
+                    loaded = true
+                    newLoad(e.path[0].src)
+                })
+                sound.addEventListener('error', (e) => newLoad('[ERROR] '+dir))
+                sound.src = `/sounds/${dir}`
+                state.sounds[dir] = sound
+            } else {
+                let img = new Image()
+                img.addEventListener('load', (e) => {
+                    loaded = true
+                    newLoad(e.path[0].src)
+                })
+                img.addEventListener('error',(e) => newLoad('[ERROR] '+dir))
+                img.src = `/images/${dir}`
+                img.id = dir
+                state.images[dir] = img
+            }
+        }
+
+        load(toLoad[0])
     }
 
     function addPoints(points) {
@@ -324,4 +344,4 @@ function createGame(Listener) {
     }
 }
 
-module.exports = createGame
+export default createGame

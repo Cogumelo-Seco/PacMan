@@ -1,4 +1,4 @@
-module.exports = (state, checkPacManDeath) => {
+export default (state, checkPacManDeath) => {
     let blockedPlaces = state.ghosts.map(g => g.id)
     blockedPlaces.push(1)
 

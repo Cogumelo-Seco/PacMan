@@ -1,4 +1,4 @@
-module.exports = async (canvas, game, Listener, randomColor) => {
+export default async (canvas, game, Listener, randomColor) => {
     const ctx = canvas.getContext('2d')
 
     let glitchedPercent = Math.floor(Math.random()*100)
@@ -58,8 +58,8 @@ module.exports = async (canvas, game, Listener, randomColor) => {
             } else if (ghostsIds.includes(column)) {
                 let ghost = game.state.ghosts.find(g => g.id == column)
 
-                let ghostImage = game.state.images[`ghosts/${ghost.color}/ghost-${ghost.animDirection}-${ghost.activeAnimation ? ghost.animation ? 2 : 1 : 1}`]
-                if (ghost.scared) ghostImage = game.state.images[`ghosts/${ghost.color}/scared/scared-ghost-${game.state.pacManKills-1800 <= +new Date() ? ghost.animation ? 1 : 2 : 1}`]
+                let ghostImage = game.state.images[`ghosts/${ghost.color}/ghost-${ghost.animDirection}-${ghost.activeAnimation ? ghost.animation ? 2 : 1 : 1}.png`]
+                if (ghost.scared) ghostImage = game.state.images[`ghosts/${ghost.color}/scared/scared-ghost-${game.state.pacManKills-1800 <= +new Date() ? ghost.animation ? 1 : 2 : 1}.png`]
 
                 let ghostY = y
                 let ghostX = x
@@ -97,7 +97,7 @@ module.exports = async (canvas, game, Listener, randomColor) => {
                     if (game.state.animations.pacMan.dalay+game.state.animations.pacMan.totalDalay/2 <= +new Date()) pacManImageStage = 'open'
                     if (game.state.animations.pacMan.dalay+game.state.animations.pacMan.totalDalay <= +new Date()) game.state.animations.pacMan.dalay = +new Date()+game.state.animations.pacMan.totalDalay
                 }
-                let pacManImage = game.state.images[`pac-man-${pacManImageStage}`]
+                let pacManImage = game.state.images[`pac-man-${pacManImageStage}.png`]
                 let rotate = 0
                 let pacManX = x
                 let pacManY = y
@@ -141,7 +141,7 @@ module.exports = async (canvas, game, Listener, randomColor) => {
                     ctx.restore()
                 }
             } else {
-                let image = game.state.images[game.state.images[Math.floor(Math.random()*game.state.images.length)]]
+                let image = game.state.images[game.state.images[Math.floor(Math.random()*game.state.images.length)]+'.png']
 
                 ctx.fillStyle = randomColor()
                 ctx.fillRect(x, y, tileSize, tileSize)

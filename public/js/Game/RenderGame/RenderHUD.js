@@ -1,4 +1,4 @@
-module.exports = async (canvas, game, Listener,) => {
+export default async (canvas, game, Listener,) => {
     const scoreHUD = document.getElementById('score')
     const highScoreHUD = document.getElementById('highScore')
     const highScoreTitle = document.getElementById('highScoreTitle')

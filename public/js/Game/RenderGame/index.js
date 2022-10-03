@@ -1,4 +1,4 @@
-module.exports = function renderGame(canvas, game, Listener) {
+export default function renderGame(canvas, game, Listener) {
     let glitchedPercent = Math.floor(Math.random()*100)
     canvas.width = game.state.gameGlitched && glitchedPercent > 95 ? game.state.canvas.width*Math.random() : game.state.canvas.width
     canvas.height = game.state.gameGlitched && glitchedPercent > 95  ? game.state.canvas.height*Math.random() : game.state.canvas.height
@@ -20,16 +20,16 @@ module.exports = function renderGame(canvas, game, Listener) {
     document.getElementById('section').style.backgroundColor = game.state.darkTheme ? '#222' : 'rgb(150, 150, 150)'
 
     if (game.state.gameStage == 'home') {
-        require('./RenderHome')(canvas, game, Listener)
+        require('./RenderHome').default(canvas, game, Listener)
     } else if (game.state.gameStage == 'loading') {
-        require('./RenderLoading')(canvas, game, Listener)
+        require('./RenderLoading').default(canvas, game, Listener)
     } else {
-        require('./RenderMap')(canvas, game, Listener, randomColor)
-        require('./RenderGhostDeath')(canvas, game, Listener)
-        require('./RenderTexts')(canvas, game, Listener)
-        require('./RenderHUD')(canvas, game, Listener)
+        require('./RenderMap').default(canvas, game, Listener, randomColor)
+        require('./RenderGhostDeath').default(canvas, game, Listener)
+        require('./RenderTexts').default(canvas, game, Listener)
+        require('./RenderHUD').default(canvas, game, Listener)
     }
-    require('./RenderInformationTexts')(canvas, game, Listener)
+    require('./RenderInformationTexts').default(canvas, game, Listener)
 
     /*let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
 

@@ -1,4 +1,4 @@
-module.exports = function codesFunction(state, checkPacManDeath, addGhost) {
+export default function codesFunction(state, checkPacManDeath, addGhost) {
     return {
         frog: function () {            
             if (!state.ghosts.find(g => g.color == 'frog')) addGhost([ 'frog', 11, false, 170 ])

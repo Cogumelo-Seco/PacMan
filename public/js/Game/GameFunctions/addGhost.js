@@ -1,4 +1,4 @@
-module.exports = (state, Listener, [ name, id, activeAnimation, speed ]) => {
+export default (state, Listener, [ name, id, activeAnimation, speed ]) => {
     state.ghosts.push({
         color: name,
         animDirection: 'up',

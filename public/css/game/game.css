@@ -31,6 +31,13 @@ div#fpsDisplay {
     right: 5px;
 }
 
+a#owner {
+    font-size: 13px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
 div#game {
     position: absolute;
     left: 50%;

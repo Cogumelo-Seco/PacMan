@@ -1,4 +1,4 @@
-module.exports = (state, Listener, [ resetAll, gameOver ]) => {
+export default (state, Listener, [ resetAll, gameOver ]) => {
     for (let i in state.ghosts) {
         let ghostId = state.ghosts[i].id
         let lineX = null
@@ -97,7 +97,7 @@ module.exports = (state, Listener, [ resetAll, gameOver ]) => {
 
     if (!gameOver) {
         state.song.pause()
-        state.song = state.sounds['music1']
+        state.song = state.sounds['music1.mp3']
         state.song.loop = false
         state.song.volume = 1
         state.song.play()
@@ -107,7 +107,7 @@ module.exports = (state, Listener, [ resetAll, gameOver ]) => {
             state.gameStage = 'game'
             state.pauseMovement = false
 
-            state.song = state.sounds['music2']
+            state.song = state.sounds['music2.mp3']
             state.song.loop = true
             state.song.volume = 0.3
             state.song.play()

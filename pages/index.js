@@ -22,7 +22,7 @@ const Game = (props) => {
                 a.layerX > -50 && a.layerX < 50 && a.layerY > 188 && a.layerY < 200 && game.state.gameStage == 'home' && window.innerWidth <= 750 && game.state.loading.loaded >= game.state.loading.total
             ) {
                 game.state.gameStage = 'initial'
-                game.playSong('music1')
+                game.playSong('music1.mp3')
 
                 document.getElementById('score').style.display = 'block'
                 document.getElementById('highScoreTitle').style.display = 'block'
@@ -57,6 +57,7 @@ const Game = (props) => {
                 <section id="section">
                     <div id="codeMessage" />
                     <div id="fpsDisplay">?FPS</div>
+                    <a href="https://www.instagram.com/wellingtonfelipe_cogu/" target="_blank" id="owner">Created by: Cogu</a>
                     
                     <div id="game">
                         <ul id="gameHUD">

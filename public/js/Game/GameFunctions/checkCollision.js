@@ -1,10 +1,10 @@
-module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) => {
+export default (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) => {
     let ghostsIds = state.ghosts.map(g => g.id)
     if (ghostsIds.includes(type)) checkPacManDeath([ type, lineY, lineX ])
     
     if (type == 0) {
         addPoints(10)
-        state.playSongEffect('coin')
+        state.playSongEffect('coin.mp3')
     }
     if (type == 2) {
         addPoints(150)
@@ -14,7 +14,7 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
             state.ghosts[i].speed = 400
         }
 
-        state.playSong('musicSpecial')
+        state.playSong('musicSpecial.mp3')
 
         let interval = setInterval(() => {
             if (state.pacManKills <= +new Date()) {
@@ -28,7 +28,7 @@ module.exports = (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) =>
                     }
                 }
 
-                state.playSong('music2', { loop: true, volume: 0.3 })
+                state.playSong('music2.mp3', { loop: true, volume: 0.3 })
             }
         }, 100)
     }
