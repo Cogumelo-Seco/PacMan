@@ -279,7 +279,6 @@ function createGame(Listener) {
         const newLoad = (msg) => {
             if (msg.includes('ERRO')) console.log(msg)
             else {
-            
                 state.loading.loaded += 1
                 state.loading.msg = `(${state.loading.loaded}/${state.loading.total}) - ${msg}`
 
@@ -294,7 +293,6 @@ function createGame(Listener) {
         }
 
         const load = (dir) => {
-            console.log(dir)
             let loaded = false
 
             setTimeout(() => {

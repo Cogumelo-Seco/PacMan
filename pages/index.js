@@ -9,6 +9,8 @@ const Game = (props) => {
     const router = useRouter()
 
     useEffect(() => {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        
         const canvas = document.getElementById('gameCanvas')        
         const Listener = createListener();
         const game = createGame(Listener);
@@ -56,14 +58,12 @@ const Game = (props) => {
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3599783073266413" crossorigin="anonymous"></script>
 
                 <ins class="adsbygoogle"
-                    style="display:block"
+                    style={{display:'block'}}
                     data-ad-client="ca-pub-3599783073266413"
                     data-ad-slot="5184058937"
                     data-ad-format="auto"
-                    data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+                    data-full-width-responsive="true">
+                </ins>
                 
                 <section id="section">
                     <div id="codeMessage" />
