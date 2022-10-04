@@ -53,6 +53,7 @@ const Game = (props) => {
                 <link rel="stylesheet" href="/css/game/resizable.css" />
             </Head>
             <body id="body">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3599783073266413" crossorigin="anonymous"></script>
 
                 <section id="section">
                     <div id="codeMessage" />
