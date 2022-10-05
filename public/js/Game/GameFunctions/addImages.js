@@ -8,6 +8,12 @@ export default async (state) => {
         'PacMan/guto/semiOpen.png',
         'PacMan/guto/closed.png',
 
+        'PacMan/mario/open.png',
+        'PacMan/mario/semiOpen.png',
+        'PacMan/mario/closed.png',
+
+        /* ---- */
+
         'ghosts/apple-cat/ghost-down-1.png',
         'ghosts/apple-cat/ghost-down-2.png',
         'ghosts/apple-cat/ghost-up-1.png',

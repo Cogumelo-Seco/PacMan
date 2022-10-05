@@ -1,5 +1,9 @@
 export default function codesFunction(state, checkPacManDeath, addGhost) {
     return {
+        mario: function () {
+            state.pacManStyle = state.pacManStyle == 'mario' ? 'default' : 'mario'
+            return state.pacManStyle == 'mario' ? true : false
+        },
         guto: function () {
             state.pacManStyle = state.pacManStyle == 'guto' ? 'default' : 'guto'
             return state.pacManStyle == 'guto' ? true : false
