@@ -5,6 +5,7 @@ function createGame(Listener) {
         highScore: 0,
         score: 0,
         gameStage: 'loading',
+        pacManStyle: 'default',
         pacManKills: 0,
         gameGlitched: false,
         gameGlitchedStage: 1,
@@ -277,14 +278,11 @@ function createGame(Listener) {
         let toLoad = state.images.concat(state.sounds)
 
         const newLoad = (msg) => {
-            if (msg.includes('ERRO')) console.log(msg)
-            else {
-                state.loading.loaded += 1
-                state.loading.msg = `(${state.loading.loaded}/${state.loading.total}) - ${msg}`
+            state.loading.loaded += 1
+            state.loading.msg = `(${state.loading.loaded}/${state.loading.total}) - ${msg}`
 
-                if (state.loading.loaded >= state.loading.total) completeLoading()
-                else load(toLoad[state.loading.loaded])
-            }
+            if (state.loading.loaded >= state.loading.total) completeLoading()
+            else load(toLoad[state.loading.loaded])
         }
 
         const completeLoading = () => {

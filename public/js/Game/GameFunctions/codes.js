@@ -1,5 +1,9 @@
 export default function codesFunction(state, checkPacManDeath, addGhost) {
     return {
+        guto: function () {
+            state.pacManStyle = state.pacManStyle == 'guto' ? 'default' : 'guto'
+            return state.pacManStyle == 'guto' ? true : false
+        },
         frog: function () {            
             if (!state.ghosts.find(g => g.color == 'frog')) addGhost([ 'frog', 11, false, 170 ])
             else return
@@ -89,7 +93,9 @@ export default function codesFunction(state, checkPacManDeath, addGhost) {
             let codesText = ''
             let codesList = codesFunction()
             for (let i in codesList) codesText += `${i}\n`
-            return codesText
+            console.log(codesText)
+
+            return 'Codes are in the console (F12)'
         }
     }
 }

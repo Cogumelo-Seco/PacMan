@@ -19,23 +19,22 @@ export default function renderGame(canvas, game, Listener) {
     document.getElementById('body').style.backgroundColor = game.state.darkTheme ? '#222' : 'rgb(150, 150, 150)'
     document.getElementById('section').style.backgroundColor = game.state.darkTheme ? '#222' : 'rgb(150, 150, 150)'
 
-    if (game.state.gameStage == 'home') {
-        require('./RenderHome').default(canvas, game, Listener)
-    } else if (game.state.gameStage == 'loading') {
-        require('./RenderLoading').default(canvas, game, Listener)
-    } else {
-        require('./RenderMap').default(canvas, game, Listener, randomColor)
-        require('./RenderGhostDeath').default(canvas, game, Listener)
-        require('./RenderTexts').default(canvas, game, Listener)
-        require('./RenderHUD').default(canvas, game, Listener)
+    switch (game.state.gameStage) {
+        case 'home':
+            require('./RenderHome').default(canvas, game, Listener)
+            break
+        case 'loading':
+            require('./RenderLoading').default(canvas, game, Listener)
+            break
+        default:
+            require('./RenderMap').default(canvas, game, Listener, randomColor)
+            require('./RenderGhostDeath').default(canvas, game, Listener)
+            require('./RenderTexts').default(canvas, game, Listener)
+            require('./RenderHUD').default(canvas, game, Listener)
+            break
     }
+
     require('./RenderInformationTexts').default(canvas, game, Listener)
-
-    /*let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
-
-    rAF(() => {
-        renderGame(canvas, game, Listener)
-    })*/
-
+    
     setTimeout(() => renderGame(canvas, game, Listener), 0)
 }

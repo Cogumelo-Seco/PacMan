@@ -1,8 +1,12 @@
 export default async (state) => {
     state.images = [
-        'pac-man-open.png',
-        'pac-man-semiOpen.png',
-        'pac-man-closed.png',
+        'PacMan/default/open.png',
+        'PacMan/default/semiOpen.png',
+        'PacMan/default/closed.png',
+
+        'PacMan/guto/open.png',
+        'PacMan/guto/semiOpen.png',
+        'PacMan/guto/closed.png',
 
         'ghosts/apple-cat/ghost-down-1.png',
         'ghosts/apple-cat/ghost-down-2.png',

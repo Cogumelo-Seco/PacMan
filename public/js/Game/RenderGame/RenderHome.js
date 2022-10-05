@@ -20,7 +20,7 @@ export default async (canvas, game, Listener) => {
         if (game.state.animations.pacMan.dalay+game.state.animations.pacMan.totalDalay/2 <= +new Date()) pacManImageStage = 'open'
         if (game.state.animations.pacMan.dalay+game.state.animations.pacMan.totalDalay <= +new Date()) game.state.animations.pacMan.dalay = +new Date()+game.state.animations.pacMan.totalDalay
     }
-    let pacManImage = game.state.images[`pac-man-${pacManImageStage}.png`]
+    let pacManImage = game.state.images[`PacMan/${game.state.pacManStyle}/${pacManImageStage}.png`]
 
     let menuAnimationX = game.state.animations.menuAnimation.menuAnimationX-(tileSize*2)
     let ghostsAnimation = game.state.animations.menuGhosts.ghostsAnimation
