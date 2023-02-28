@@ -9,10 +9,6 @@ const Game = (props) => {
     const router = useRouter()
 
     useEffect(() => {
-        try {
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        } catch {}
-        
         const canvas = document.getElementById('gameCanvas')        
         const Listener = createListener();
         const game = createGame(Listener);
@@ -57,18 +53,6 @@ const Game = (props) => {
                 <link rel="stylesheet" href="/css/game/resizable.css" />
             </Head>
             <body id="body">
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3599783073266413" crossorigin="anonymous"></script>
-
-                <ins className="adsbygoogle"
-                    style={{display:'block'}}
-                    data-ad-client="ca-pub-3599783073266413"
-                    data-ad-slot="5184058937"
-                    data-ad-format="auto"
-                    data-full-width-responsive="true">
-                        <span>Ad</span>
-                </ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({})</script>
-                
                 <section id="section">
                     <div id="codeMessage" />
                     <div id="fpsDisplay">?FPS</div>

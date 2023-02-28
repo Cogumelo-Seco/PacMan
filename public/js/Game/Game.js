@@ -301,7 +301,7 @@ function createGame(Listener) {
                 let sound = new Audio()
                 sound.addEventListener('loadeddata', (e) => {
                     loaded = true
-                    newLoad(e.path[0].src)
+                    newLoad(e.path ? e.path[0].src : '')
                 })
                 sound.addEventListener('error', (e) => newLoad('[ERROR] '+dir))
                 sound.src = `/sounds/${dir}`
@@ -310,7 +310,7 @@ function createGame(Listener) {
                 let img = new Image()
                 img.addEventListener('load', (e) => {
                     loaded = true
-                    newLoad(e.path[0].src)
+                    newLoad(e.path ? e.path[0].src : '')
                 })
                 img.addEventListener('error',(e) => newLoad('[ERROR] '+dir))
                 img.src = `/images/${dir}`
