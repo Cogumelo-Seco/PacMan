@@ -56,7 +56,7 @@ const Game = (props) => {
                 <section id="section">
                     <div id="codeMessage" />
                     <div id="fpsDisplay">?FPS</div>
-                    <a href="https://www.instagram.com/wellingtonfelipe_cogu/" target="_blank" id="owner">Created by: Cogu</a>
+                    <a href="https://www.instagram.com/wellingtonfelipe_kogu/" target="_blank" id="owner">Created by: Kogu</a>
                     
                     <div id="game">
                         <ul id="gameHUD">
